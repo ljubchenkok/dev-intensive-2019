@@ -9,4 +9,14 @@ object Utils {
         if (secondName?.length == 0) secondName = null
         return Pair(firstName, secondName)
     }
+
+    fun toInitials(firstName:String?, lastName:String?):String?{
+        val first = firstName?.capitalize()?.get(0)
+        val last = lastName?.capitalize()?.get(0)
+        var result:String? = null
+        if(first != null && first?.isLetter()) result="$first"
+        if(last != null && last.isLetter()) result="$last"
+        return result
+
+    }
 }
