@@ -20,17 +20,6 @@ data class User(
         avatar = null
     )
 
-    private constructor(builder: Builder) : this(
-        builder.id,
-        builder.firstName,
-        builder.lastName,
-        builder.avatar,
-        builder.rating,
-        builder.respect,
-        builder.lastVisit,
-        builder.isOnline
-
-    )
 
     companion object Factory {
         private var lastId = -1
@@ -42,14 +31,14 @@ data class User(
     }
 
     class Builder() {
-        lateinit var id: String
-        var firstName: String? = null
-        var lastName: String? = null
-        var avatar: String? = null
-        var rating: Int = 0
-        var respect: Int = 0
-        var lastVisit: Date? = Date()
-        var isOnline: Boolean = false
+        private var id: String? = null
+        private var firstName: String? = null
+        private var lastName: String? = null
+        private var avatar: String? = null
+        private var rating: Int = 0
+        private var respect: Int = 0
+        private var lastVisit: Date? = Date()
+        private var isOnline: Boolean = false
 
         fun id(id: String) = apply { this.id = id }
         fun firstName(firstName: String?) = apply { this.firstName = firstName }
@@ -59,7 +48,9 @@ data class User(
         fun respect(respect: Int) = apply { this.respect = respect }
         fun lastVisit(lastVisit: Date?) = apply { this.lastVisit = lastVisit }
         fun isOnline(isOnline: Boolean) = apply { this.isOnline = isOnline }
-        fun build() = User(this)
+        fun build() =
+            User(id ?: "${++lastId}", firstName, lastName, avatar, rating, respect, lastVisit, isOnline)
+
 
     }
 
