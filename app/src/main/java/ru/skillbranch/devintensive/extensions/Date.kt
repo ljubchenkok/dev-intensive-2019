@@ -21,24 +21,13 @@ enum class TimeUnits(val value: Long) {
     MINUTE(SECOND.value * 60L),
     HOUR(MINUTE.value * 60L),
     DAY(HOUR.value * 24L);
-    fun plural(duration: Int):String{
+    fun plural(duration: Long):String{
         return when(this){
-            SECOND -> getPluralWithUnit(duration, secondDeclensionList)
-            MINUTE -> getPluralWithUnit(duration, minuteDeclensionList)
-            HOUR -> getPluralWithUnit(duration, hourDeclensionList)
-            DAY -> getPluralWithUnit(duration, dayDeclensionList)
+            SECOND -> getDurationStringWithUnits(duration, secondDeclensionList, isPlural = true)
+            MINUTE -> getDurationStringWithUnits(duration, minuteDeclensionList, isPlural = true)
+            HOUR -> getDurationStringWithUnits(duration, hourDeclensionList, isPlural = true)
+            DAY -> getDurationStringWithUnits(duration, dayDeclensionList, isPlural = true)
         }
-    }
-
-    private fun getPluralWithUnit(value: Int, durationList: ArrayList<String>): String {
-        val index = when {
-            value % 100 in 11..14 -> 0
-            value % 10 == 1 -> 1
-            value % 10 in 2..4 -> 2
-            else -> 0
-        }
-        return "$value ${durationList[index]}"
-
     }
 }
 
@@ -48,16 +37,14 @@ fun Date.add(value: Int, units: TimeUnits = TimeUnits.SECOND): Date {
 }
 
 
-
-
-fun getDiffStringWithUnits(diff_unit: Long, units: ArrayList<String>, isPast: Boolean = true): String {
+fun getDurationStringWithUnits(value: Long, units: ArrayList<String>, isPast: Boolean = true, isPlural: Boolean=false): String {
     val index = when {
-        diff_unit in 11..14 -> 0
-        (diff_unit % 10) == 1L -> 1
-        (diff_unit % 10) in 2..4 -> 2
+        value %100 in 11..14 -> 0
+        value % 10 == 1L -> 1
+        value % 10 in 2..4 -> 2
         else -> 0
     }
-    return if (isPast) "$diff_unit ${units[index]} назад" else "через $diff_unit ${units[index]}"
+    return if (isPlural) "$value ${units[index]}" else if (isPast) "$value ${units[index]} назад" else "через $value ${units[index]}"
 }
 
 fun Date.humanizeDiff(): String {
@@ -69,18 +56,18 @@ fun Date.humanizeDiff(): String {
             in 45..75 -> return "минуту назад"
             in 76..(60 * 45) -> {
                 val diffUnit = (diff / 60).toDouble().roundToLong()
-                return getDiffStringWithUnits(diffUnit, minuteDeclensionList)
+                return getDurationStringWithUnits(diffUnit, minuteDeclensionList)
 
             }
             in (46 * 60)..(75 * 60) -> return "час назад"
             in (75 * 60)..(22 * 3600) -> {
                 val diffUnit = (diff / 3600).toDouble().roundToLong()
-                return getDiffStringWithUnits(diffUnit, hourDeclensionList)
+                return getDurationStringWithUnits(diffUnit, hourDeclensionList)
             }
             in (22 * 3600)..(26 * 3600) -> return "день назад"
             in (26 * 3600)..(360 * 24 * 3600) -> {
                 val diffUnit = (diff / (3600 * 24)).toDouble().roundToLong()
-                return getDiffStringWithUnits(diffUnit, dayDeclensionList)
+                return getDurationStringWithUnits(diffUnit, dayDeclensionList)
             }
             else -> return "более года назад"
 
@@ -93,18 +80,18 @@ fun Date.humanizeDiff(): String {
             in 45..75 -> return "через минуту"
             in 76..(60 * 45) -> {
                 val diffUnit = (diff / 60).toDouble().roundToLong()
-                return getDiffStringWithUnits(diffUnit, minuteDeclensionList, false)
+                return getDurationStringWithUnits(diffUnit, minuteDeclensionList, false)
 
             }
             in (46 * 60)..(75 * 60) -> return "через час"
             in (75 * 60)..(22 * 3600) -> {
                 val diffUnit = (diff / 3600).toDouble().roundToLong()
-                return getDiffStringWithUnits(diffUnit, hourDeclensionList, false)
+                return getDurationStringWithUnits(diffUnit, hourDeclensionList, false)
             }
             in (22 * 3600)..(26 * 3600) -> return "через день"
             in (26 * 3600)..(360 * 24 * 3600) -> {
                 val diffUnit = (diff / (3600 * 24)).toDouble().roundToLong()
-                return getDiffStringWithUnits(diffUnit, dayDeclensionList, false)
+                return getDurationStringWithUnits(diffUnit, dayDeclensionList, false)
             }
             else -> return "более чем через год"
         }
