@@ -29,8 +29,7 @@ val hourList = arrayListOf("часов", "час", "часа")
 val dayList = arrayListOf("дней", "день", "дня")
 
 fun getDiffStringWithUnits(diff_unit: Long, units: ArrayList<String>, isPast: Boolean = true): String {
-    var index = 0
-    index = when {
+    val index = when {
         diff_unit in 11..14 -> 0
         (diff_unit % 10) == 1L -> 1
         (diff_unit % 10) in 2..4 -> 2
