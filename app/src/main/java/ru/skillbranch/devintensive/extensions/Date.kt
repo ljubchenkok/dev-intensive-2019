@@ -11,11 +11,35 @@ fun Date.format(pattern: String = "HH:mm:ss dd.MM.yy"): String? {
 
 }
 
+val secondDeclensionList = arrayListOf("секунд", "секунду", "секунды", "секунда")
+val minuteDeclensionList = arrayListOf("минут", "минуту", "минуты", "минута")
+val hourDeclensionList = arrayListOf("часов", "час", "часа", "час")
+val dayDeclensionList = arrayListOf("дней", "день", "дня", "день")
+
 enum class TimeUnits(val value: Long) {
     SECOND(1000L),
     MINUTE(SECOND.value * 60L),
     HOUR(MINUTE.value * 60L),
-    DAY(HOUR.value * 24L)
+    DAY(HOUR.value * 24L);
+    fun plural(duration: Int):String{
+        return when(this){
+            SECOND -> getPluralWithUnit(duration, secondDeclensionList)
+            MINUTE -> getPluralWithUnit(duration, minuteDeclensionList)
+            HOUR -> getPluralWithUnit(duration, hourDeclensionList)
+            DAY -> getPluralWithUnit(duration, dayDeclensionList)
+        }
+    }
+
+    private fun getPluralWithUnit(value: Int, durationList: ArrayList<String>): String {
+        val index = when {
+            value % 100 in 11..14 -> 0
+            value % 10 == 1 -> 1
+            value % 10 in 2..4 -> 2
+            else -> 0
+        }
+        return "$value ${durationList[index]}"
+
+    }
 }
 
 fun Date.add(value: Int, units: TimeUnits = TimeUnits.SECOND): Date {
@@ -24,9 +48,7 @@ fun Date.add(value: Int, units: TimeUnits = TimeUnits.SECOND): Date {
 }
 
 
-val minuteList = arrayListOf("минут", "минуту", "минуты")
-val hourList = arrayListOf("часов", "час", "часа")
-val dayList = arrayListOf("дней", "день", "дня")
+
 
 fun getDiffStringWithUnits(diff_unit: Long, units: ArrayList<String>, isPast: Boolean = true): String {
     val index = when {
@@ -47,18 +69,18 @@ fun Date.humanizeDiff(): String {
             in 45..75 -> return "минуту назад"
             in 76..(60 * 45) -> {
                 val diffUnit = (diff / 60).toDouble().roundToLong()
-                return getDiffStringWithUnits(diffUnit, minuteList)
+                return getDiffStringWithUnits(diffUnit, minuteDeclensionList)
 
             }
             in (46 * 60)..(75 * 60) -> return "час назад"
             in (75 * 60)..(22 * 3600) -> {
                 val diffUnit = (diff / 3600).toDouble().roundToLong()
-                return getDiffStringWithUnits(diffUnit, hourList)
+                return getDiffStringWithUnits(diffUnit, hourDeclensionList)
             }
             in (22 * 3600)..(26 * 3600) -> return "день назад"
             in (26 * 3600)..(360 * 24 * 3600) -> {
                 val diffUnit = (diff / (3600 * 24)).toDouble().roundToLong()
-                return getDiffStringWithUnits(diffUnit, dayList)
+                return getDiffStringWithUnits(diffUnit, dayDeclensionList)
             }
             else -> return "более года назад"
 
@@ -71,18 +93,18 @@ fun Date.humanizeDiff(): String {
             in 45..75 -> return "через минуту"
             in 76..(60 * 45) -> {
                 val diffUnit = (diff / 60).toDouble().roundToLong()
-                return getDiffStringWithUnits(diffUnit, minuteList, false)
+                return getDiffStringWithUnits(diffUnit, minuteDeclensionList, false)
 
             }
             in (46 * 60)..(75 * 60) -> return "через час"
             in (75 * 60)..(22 * 3600) -> {
                 val diffUnit = (diff / 3600).toDouble().roundToLong()
-                return getDiffStringWithUnits(diffUnit, hourList, false)
+                return getDiffStringWithUnits(diffUnit, hourDeclensionList, false)
             }
             in (22 * 3600)..(26 * 3600) -> return "через день"
             in (26 * 3600)..(360 * 24 * 3600) -> {
                 val diffUnit = (diff / (3600 * 24)).toDouble().roundToLong()
-                return getDiffStringWithUnits(diffUnit, dayList, false)
+                return getDiffStringWithUnits(diffUnit, dayDeclensionList, false)
             }
             else -> return "более чем через год"
         }
