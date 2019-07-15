@@ -11,11 +11,11 @@ object Utils {
         }
         var firstName:String? = null
         var lastName: String? = null
-        if(splitNameWithoutNull?.size > 0){
-            firstName = splitNameWithoutNull?.getOrNull(0)
+        if(splitNameWithoutNull.size > 0){
+            firstName = splitNameWithoutNull.getOrNull(0)
         }
-        if(splitNameWithoutNull?.size > 1){
-            lastName = splitNameWithoutNull?.getOrNull(1)
+        if(splitNameWithoutNull.size > 1){
+            lastName = splitNameWithoutNull.getOrNull(1)
         }
         return Pair(firstName, lastName)
     }
@@ -30,7 +30,7 @@ object Utils {
             last = lastName.capitalize().get(0)
         }
         var result: String = ""
-        if (first != null && first?.isLetter()) result += first
+        if (first != null && first.isLetter()) result += first
         if (last != null && last.isLetter()) result += last
         return if(result.isNotEmpty()) result else null
     }
