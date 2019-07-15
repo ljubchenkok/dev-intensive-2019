@@ -1,6 +1,8 @@
 package ru.skillbranch.devintensive.models
 
 class Bender(var status: Status = Status.NORMAL, var question: Question = Question.NAME) {
+
+    var errorCount:Int = 0
     fun askQuestion(): String = when (question) {
         Question.NAME -> Question.NAME.question
         Question.PROFESSION -> Question.PROFESSION.question
@@ -13,10 +15,21 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
     fun listenAnswer(answer: String): Pair<String, Triple<Int, Int, Int>> {
         return if (question.answers.contains(answer)) {
             question = question.nextQuestion()
+            errorCount = 0
             "Отлично - это правильный ответ\n${question.question}" to status.color
         } else {
-            status = status.nextStatus()
-            "Это не правильный ответ\n${question.question}" to status.color
+            errorCount++
+            if(errorCount == 3) {
+                status = Status.NORMAL
+                question = Question.NAME
+                errorCount = 0
+                "Это неправильный ответ. Давай все по новой\n${question.question}" to status.color
+            } else {
+
+
+                status = status.nextStatus()
+                "Это не правильный ответ\n${question.question}" to status.color
+            }
         }
     }
 
@@ -37,25 +50,38 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
 
     enum class Question(val question: String, val answers: List<String>) {
         NAME("Как меня зовут?", listOf("бендер", "bender")) {
+            override fun validateAnswer(answer: String): Boolean = answer.get(0).isUpperCase()
             override fun nextQuestion(): Question = PROFESSION
         },
         PROFESSION("Назови мою профессию?", listOf("сгибальщик", "bender")) {
+            override fun validateAnswer(answer: String): Boolean  = answer.get(0).isLowerCase()
+
             override fun nextQuestion(): Question = MATERIAL
         },
         MATERIAL("Из чего я сделан?", listOf("металл", "дерево", "metal", "iron", "wood")) {
+            override fun validateAnswer(answer: String): Boolean = !answer.contains(Regex("[0-9]"))
+
             override fun nextQuestion(): Question = BDAY
         },
         BDAY("Когда меня сделали?", listOf("2993")) {
+            override fun validateAnswer(answer: String): Boolean = answer.contains(Regex("^\\d+\$"))
+
             override fun nextQuestion(): Question = SERIAL
         },
         SERIAL("Мой серийный номер?", listOf("2716057")) {
+            override fun validateAnswer(answer: String): Boolean = answer.contains(Regex("^\\d{7}$"))
+
             override fun nextQuestion(): Question = IDLE
         },
         IDLE("На этом все, вопросов больше нет?", listOf()) {
+            override fun validateAnswer(answer: String): Boolean=true
+
             override fun nextQuestion(): Question = NAME
         };
 
         abstract fun nextQuestion(): Question
+        abstract fun validateAnswer(answer:String):Boolean
+
     }
 
 

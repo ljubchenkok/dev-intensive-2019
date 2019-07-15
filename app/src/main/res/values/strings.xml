@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Chat Dev-intensive</string>
+    <string name="bender_description">Bender</string>
+    <string name="message">введите текст</string>
 </resources>
