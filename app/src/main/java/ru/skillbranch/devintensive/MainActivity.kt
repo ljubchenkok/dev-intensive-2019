@@ -52,8 +52,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, TextView.OnEdito
 
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
         if (actionId == EditorInfo.IME_ACTION_DONE
-            || event?.action == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-            if(isKeyboardOpen()) hideKeyboard()
+            || event?.action == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER
+        ) {
+            if (isKeyboardOpen()) hideKeyboard()
             onClick(iv_send)
             return true
         }
