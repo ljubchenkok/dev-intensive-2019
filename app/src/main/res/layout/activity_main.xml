@@ -38,6 +38,7 @@
     >
         <EditText
                 android:id="@+id/et_message"
+                android:singleLine="true"
                 android:lines="1"
                 android:maxLines="1"
                 android:hint="@string/message"
