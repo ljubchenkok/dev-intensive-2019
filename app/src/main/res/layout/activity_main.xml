@@ -11,7 +11,7 @@
     <TextView
             android:id="@+id/tv_text"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="200dp"
             android:text="Hello World!"
             android:gravity="center"
             android:textSize="@dimen/font_large_24"
