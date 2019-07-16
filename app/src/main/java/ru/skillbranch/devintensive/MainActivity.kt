@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, TextView.OnEdito
         if (actionId == EditorInfo.IME_ACTION_DONE
             || event?.action == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER
         ) {
-            if (isKeyboardOpen()) hideKeyboard()
+
             onClick(iv_send)
             return true
         }
@@ -62,6 +62,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, TextView.OnEdito
     }
 
     override fun onClick(v: View?) {
+        if (isKeyboardOpen()) hideKeyboard()
         if (v == iv_send) {
             val (phrase, color) = benderObj.listenAnswer(messageEt.text.toString())
             messageEt.setText("")

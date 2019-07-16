@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Rect
 import android.view.inputmethod.InputMethodManager
 import android.util.DisplayMetrics
+import android.util.TypedValue
 
 
 fun Activity.hideKeyboard() {
@@ -17,14 +18,16 @@ fun Activity.hideKeyboard() {
     }
 }
 
+
 fun Activity.isKeyboardOpen(): Boolean {
     val displayMetrics = DisplayMetrics()
     windowManager.defaultDisplay.getMetrics(displayMetrics)
     val screenHeight: Int = displayMetrics.heightPixels
     val rect = Rect()
     window.decorView.getWindowVisibleDisplayFrame(rect)
-    val frameHeight: Int = rect.top
-    return screenHeight - frameHeight > 100
+    val frameHeight: Int = rect.height()
+    val diff = screenHeight - frameHeight
+    return diff > 30
 }
 
 fun Activity.isKeyboardClosed(): Boolean {
