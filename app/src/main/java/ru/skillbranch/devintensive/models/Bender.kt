@@ -29,7 +29,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
 
 
                     status = status.nextStatus()
-                    "Это не правильный ответ\n${question.question}" to status.color
+                    "Это неправильный ответ\n${question.question}" to status.color
                 }
             }
         } else {
@@ -71,7 +71,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
 
             override fun nextQuestion(): Question = BDAY
         },
-        BDAY("Когда меня сделали?", listOf("2993")) {
+        BDAY("Когда меня создали?", listOf("2993")) {
             override fun validateAnswer(answer: String): Pair<Boolean, String> =
                 answer.contains(Regex("^\\d+\$")) to "Год моего рождения должен содержать только цифры"
 
