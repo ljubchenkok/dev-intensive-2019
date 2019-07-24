@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Chat Dev-intensive</string>
-    <string name="bender_description">Bender</string>
-    <string name="message">введите текст</string>
+    <string name="profile_label_rating">Рейтинг</string>
+    <string name="profile_label_respect">Уважение</string>
+    <string name="profile_hint_repository">Репозиторий</string>
+    <string name="profile_hint_about">О себе</string>
+    <string name="profile_hint_last_name">Фамилия</string>
+    <string name="profile_hint_first_name">Имя</string>
 </resources>

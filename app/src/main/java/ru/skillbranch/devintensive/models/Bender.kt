@@ -53,31 +53,31 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
     enum class Question(val question: String, val answers: List<String>) {
         NAME("Как меня зовут?", listOf("бендер", "bender")) {
             override fun validateAnswer(answer: String): Pair<Boolean, String> =
-                (answer != null && answer.isNotEmpty() && answer[0].isUpperCase()) to "Имя должно начинаться с заглавной буквы"
+                (answer.isNotEmpty() && answer[0].isUpperCase()) to "Имя должно начинаться с заглавной буквы"
 
             override fun nextQuestion(): Question = PROFESSION
         },
         PROFESSION("Назови мою профессию?", listOf("сгибальщик", "bender")) {
             override fun validateAnswer(answer: String): Pair<Boolean, String> =
-                (answer != null && answer.isNotEmpty() && answer[0].isLowerCase()) to "Профессия должна начинаться со строчной буквы"
+                (answer.isNotEmpty() && answer[0].isLowerCase()) to "Профессия должна начинаться со строчной буквы"
 
             override fun nextQuestion(): Question = MATERIAL
         },
         MATERIAL("Из чего я сделан?", listOf("металл", "дерево", "metal", "iron", "wood")) {
             override fun validateAnswer(answer: String): Pair<Boolean, String> =
-                (answer != null && answer.isNotEmpty() && !answer.contains(Regex("[0-9]"))) to "Материал не должен содержать цифр"
+                (answer.isNotEmpty() && !answer.contains(Regex("[0-9]"))) to "Материал не должен содержать цифр"
 
             override fun nextQuestion(): Question = BDAY
         },
         BDAY("Когда меня создали?", listOf("2993")) {
             override fun validateAnswer(answer: String): Pair<Boolean, String> =
-                (answer != null && answer.isNotEmpty() && answer.contains(Regex("^\\d+\$"))) to "Год моего рождения должен содержать только цифры"
+                (answer.isNotEmpty() && answer.contains(Regex("^\\d+\$"))) to "Год моего рождения должен содержать только цифры"
 
             override fun nextQuestion(): Question = SERIAL
         },
         SERIAL("Мой серийный номер?", listOf("2716057")) {
             override fun validateAnswer(answer: String): Pair<Boolean, String> =
-                (answer != null && answer.isNotEmpty() && answer.contains(Regex("^\\d{7}$"))) to "Серийный номер содержит только цифры, и их 7"
+                (answer.isNotEmpty() && answer.contains(Regex("^\\d{7}$"))) to "Серийный номер содержит только цифры, и их 7"
 
             override fun nextQuestion(): Question = IDLE
         },
