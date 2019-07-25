@@ -34,10 +34,12 @@
                     android:layout_marginRight="@dimen/spacing_huge_32"
                     android:layout_marginTop="@dimen/spacing_huge_32"/>
 
-            <ImageView
+            <ru.skillbranch.devintensive.ui.custom.CircleImageView
                     android:id="@+id/iv_avatar"
                     android:layout_width="@dimen/avatar_round_size"
                     android:layout_height="@dimen/avatar_round_size"
+                    app:cv_borderColor="@color/color_accent"
+                    app:cv_borderWidth="@dimen/spacing_tiny_4"
                     android:src="@drawable/avatar_default"
                     android:layout_centerHorizontal="true"/>
 

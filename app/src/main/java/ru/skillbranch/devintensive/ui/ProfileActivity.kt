@@ -85,6 +85,7 @@ class ProfileActivity : AppCompatActivity() {
         btn_switch_theme.setOnClickListener{
             viewModel.switchTheme()
         }
+        showCurrentMode(isEditMode)
     }
 
     private fun showCurrentMode(isEditMode: Boolean) {
@@ -116,8 +117,8 @@ class ProfileActivity : AppCompatActivity() {
 
     }
 
-    override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
-        super.onSaveInstanceState(outState, outPersistentState)
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
         outState?.putBoolean(IS_EDIT_MODE, isEditMode)
     }
 }
