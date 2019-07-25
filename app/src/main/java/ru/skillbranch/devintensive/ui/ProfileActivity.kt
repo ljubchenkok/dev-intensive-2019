@@ -23,7 +23,7 @@ class ProfileActivity : AppCompatActivity() {
         const val IS_EDIT_MODE = "IS_EDIT_MODE"
     }
 
-    lateinit private var  viewModel: ProfileViewModel
+    lateinit private var viewModel: ProfileViewModel
     var isEditMode = false
     lateinit var viewFilds: Map<String, TextView>
 
@@ -34,10 +34,10 @@ class ProfileActivity : AppCompatActivity() {
         initViewModel()
     }
 
-    private fun initViewModel(){
+    private fun initViewModel() {
         viewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
-        viewModel.getProfileData().observe(this, Observer { initUI(it)})
-        viewModel.getAppTheme().observe(this, Observer { initTheme(it)})
+        viewModel.getProfileData().observe(this, Observer { initUI(it) })
+        viewModel.getAppTheme().observe(this, Observer { initTheme(it) })
     }
 
     private fun initTheme(mode: Int) {
@@ -47,14 +47,14 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun initUI(profile: Profile) {
         profile.toMap().also {
-            for((k,v) in viewFilds){
+            for ((k, v) in viewFilds) {
                 v.text = it[k].toString()
             }
         }
 
     }
 
-    private fun saveProfileInfo(){
+    private fun saveProfileInfo() {
         Profile(
             firstName = et_first_name.text.toString(),
             lastName = et_last_name.text.toString(),
@@ -78,11 +78,11 @@ class ProfileActivity : AppCompatActivity() {
             "respect" to tv_respect
         )
         btn_edit.setOnClickListener {
-            if(isEditMode) saveProfileInfo()
+            if (isEditMode) saveProfileInfo()
             isEditMode = !isEditMode
             showCurrentMode(isEditMode)
         }
-        btn_switch_theme.setOnClickListener{
+        btn_switch_theme.setOnClickListener {
             viewModel.switchTheme()
         }
         showCurrentMode(isEditMode)
@@ -90,22 +90,22 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun showCurrentMode(isEditMode: Boolean) {
         val info = viewFilds.filter { setOf("firstName", "lastName", "about", "repository").contains(it.key) }
-        for((_,v) in info){
+        for ((_, v) in info) {
             v as EditText
             v.isFocusable = isEditMode
             v.isFocusableInTouchMode = isEditMode
             v.isEnabled = isEditMode
-            v.background.alpha = if(isEditMode) 255 else 0
+            v.background.alpha = if (isEditMode) 255 else 0
         }
-        ic_eye.visibility = if(isEditMode)  View.GONE else View.VISIBLE
+        ic_eye.visibility = if (isEditMode) View.GONE else View.VISIBLE
         wr_about.isCounterEnabled = isEditMode
-        with(btn_edit){
-            val filter: ColorFilter? =  if(isEditMode) {
+        with(btn_edit) {
+            val filter: ColorFilter? = if (isEditMode) {
                 PorterDuffColorFilter(resources.getColor(R.color.color_accent, theme), PorterDuff.Mode.SRC_IN)
             } else {
                 null
             }
-            val icon = if (isEditMode){
+            val icon = if (isEditMode) {
                 resources.getDrawable(R.drawable.ic_save_black_24dp, theme)
             } else {
                 resources.getDrawable(R.drawable.ic_edit_black_24dp, theme)

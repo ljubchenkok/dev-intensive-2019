@@ -6,13 +6,16 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.widget.ImageView
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
+import androidx.annotation.Dimension
 import ru.skillbranch.devintensive.R
 
 class CircleImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     ImageView(context, attrs) {
 
-    private var borderWidth: Int
     private var borderColor: Int
+    private var borderWidth: Int
     private var bitmapShader: Shader? = null
     private val shaderMatrix: Matrix
     private val bitmapDrawBounds: RectF
@@ -31,7 +34,6 @@ class CircleImageView @JvmOverloads constructor(context: Context, attrs: Attribu
     init {
         borderColor = DEFAULT_BORDER_COLOR
         borderWidth = DEFAULT_BORDER_WIDTH
-
         if (attrs != null) {
             val a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView, 0, 0)
 
@@ -53,6 +55,30 @@ class CircleImageView @JvmOverloads constructor(context: Context, attrs: Attribu
         initialized = true
         setupBitmap()
     }
+
+    fun getBorderWidth():Int = borderWidth
+
+    fun setBorderWidth(dp:Int){
+        borderWidth=dp
+        borderPaint.strokeWidth = dp.toFloat()
+        invalidate()
+    }
+    fun getBorderColor():Int = borderColor
+
+    fun setBorderColor(hex:String) {
+        borderColor = Color.parseColor(hex)
+        borderPaint.color = borderColor
+        invalidate()
+    }
+
+    fun setBorderColor(@ColorRes colorId: Int){
+        borderColor = context.resources.getColor(colorId, context.theme)
+        borderPaint.color = borderColor
+        invalidate()
+    }
+
+
+
 
 
 
@@ -149,7 +175,6 @@ class CircleImageView @JvmOverloads constructor(context: Context, attrs: Attribu
 
         return bitmap
     }
-
 
 
 }
