@@ -16,14 +16,16 @@ import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_profile.*
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.models.Profile
+import ru.skillbranch.devintensive.utils.Utils
 import ru.skillbranch.devintensive.viewmodels.ProfileViewModel
 
 class ProfileActivity : AppCompatActivity() {
     companion object {
         const val IS_EDIT_MODE = "IS_EDIT_MODE"
+
     }
 
-    lateinit private var viewModel: ProfileViewModel
+    lateinit var viewModel: ProfileViewModel
     var isEditMode = false
     lateinit var viewFilds: Map<String, TextView>
 
@@ -63,6 +65,7 @@ class ProfileActivity : AppCompatActivity() {
             repository = et_repository.text.toString()
         ).apply {
             viewModel.saveProfileData(this)
+            tv_nick_name.text = this.nickName
         }
     }
 
@@ -79,9 +82,25 @@ class ProfileActivity : AppCompatActivity() {
             "respect" to tv_respect
         )
         btn_edit.setOnClickListener {
-            if (isEditMode) saveProfileInfo()
-            isEditMode = !isEditMode
-            showCurrentMode(isEditMode)
+            if (isEditMode) {
+                if (!Utils.validateUrl(et_repository.text.toString())) {
+                    wr_repository.error = resources.getString(R.string.error_message)
+                    et_repository.text.clear()
+                    et_repository.requestFocus()
+
+                }
+                else {
+                    saveProfileInfo()
+                    isEditMode = !isEditMode
+                    showCurrentMode(isEditMode)
+                    wr_repository.error = null
+                }
+
+            } else {
+                isEditMode = !isEditMode
+                showCurrentMode(isEditMode)
+            }
+
         }
         btn_switch_theme.setOnClickListener {
             viewModel.switchTheme()
