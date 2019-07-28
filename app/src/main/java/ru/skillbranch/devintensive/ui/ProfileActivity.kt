@@ -1,23 +1,28 @@
 package ru.skillbranch.devintensive.ui
 
 
+import android.graphics.Color
 import android.graphics.ColorFilter
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_profile.*
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.models.Profile
+import ru.skillbranch.devintensive.ui.custom.TextDrawable
 import ru.skillbranch.devintensive.utils.Utils
 import ru.skillbranch.devintensive.viewmodels.ProfileViewModel
+
+
+import android.content.res.Configuration
+
 
 class ProfileActivity : AppCompatActivity() {
     companion object {
@@ -49,6 +54,19 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun initUI(profile: Profile) {
+        val initials = Utils.toInitials(profile.firstName, profile.lastName)
+        if (initials != null) {
+            val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+            val color = if(currentNightMode ==  Configuration.UI_MODE_NIGHT_YES){
+                resources.getColor(R.color.color_accent_night, theme) }
+            else {
+                resources.getColor(R.color.color_accent, theme)
+            }
+            val drawable = TextDrawable.builder()
+                .buildRound(initials, color)
+            iv_avatar.setImageDrawable(drawable)
+            iv_avatar.setupBitmap()
+        }
         profile.toMap().also {
             for ((k, v) in viewFilds) {
                 v.text = it[k].toString()
@@ -58,6 +76,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun saveProfileInfo() {
+
         Profile(
             firstName = et_first_name.text.toString(),
             lastName = et_last_name.text.toString(),
@@ -87,9 +106,7 @@ class ProfileActivity : AppCompatActivity() {
                     wr_repository.error = resources.getString(R.string.error_message)
                     et_repository.text.clear()
                     et_repository.requestFocus()
-
-                }
-                else {
+                } else {
                     saveProfileInfo()
                     isEditMode = !isEditMode
                     showCurrentMode(isEditMode)
