@@ -117,9 +117,9 @@ object Utils {
     }
 
     fun validateUrl(url: String): Boolean {
-        var result = true
         var u: URL
-        if (url.length < 10) result = false
+        if (url.isEmpty()) return true
+        if (url.length < 10) return false
         else {
             try {
                 u = if (url.substring(0, 8) != "https://") {
@@ -128,20 +128,20 @@ object Utils {
                     URL(url)
                 }
                 with(u) {
-                    if (host !in githubValidHosts) result = false
-                    if (path.isEmpty() || path in githubInvalidPath) result = false
+                    if (host !in githubValidHosts) return false
+                    if (path.isEmpty() || path in githubInvalidPath) return false
                     else {
                         var splitPath = path.split("/")
-                        if (splitPath.size != 2) result = false
+                        if (splitPath.size != 2) return false
                         for (s in splitPath) {
-                            if (s in githubInvalidPath) result = false
+                            if (s in githubInvalidPath) return false
                         }
                     }
                 }
             } catch (ex: MalformedURLException) {
-                result = false
+                return false
             }
         }
-        return result
+        return true
     }
 }
