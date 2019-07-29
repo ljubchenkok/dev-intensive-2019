@@ -5,26 +5,6 @@ import java.net.URL
 
 object Utils {
 
-    val githubValidHosts = listOf(
-        "www.github.com",
-        "github.com"
-    )
-    val githubInvalidPath = listOf(
-        "enterprise",
-        "features",
-        "topics",
-        "collections",
-        "trending",
-        "events",
-        "marketplace",
-        "pricing",
-        "nonprofit",
-        "customer-stories",
-        "security",
-        "login",
-        "join"
-    )
-
     fun parseFullName(fullName: String?): Pair<String?, String?> {
         val splitName: List<String>? = fullName?.split(" ")
         var splitNameWithoutNull: ArrayList<String> = ArrayList()
@@ -116,32 +96,25 @@ object Utils {
         return result.substringBeforeLast(divider)
     }
 
-    fun validateUrl(url: String): Boolean {
-        var u: URL
-        if (url.isEmpty()) return true
-        if (url.length < 10) return false
-        else {
-            try {
-                u = if (url.substring(0, 8) != "https://") {
-                    URL("https://$url")
-                } else {
-                    URL(url)
-                }
-                with(u) {
-                    if (host !in githubValidHosts) return false
-                    if (path.isEmpty() || path in githubInvalidPath) return false
-                    else {
-                        var splitPath = path.split("/")
-                        if (splitPath.size != 2) return false
-                        for (s in splitPath) {
-                            if (s in githubInvalidPath) return false
-                        }
-                    }
-                }
-            } catch (ex: MalformedURLException) {
-                return false
-            }
-        }
-        return true
-    }
+    fun validateUrl(url: String): Boolean = url.isEmpty() || (
+            url.matches("^(https://)?(www.)?github.com/[A-z,\\d]{0,38}\$".toRegex())) &&
+            !url.matches(
+                Regex("^.*(" +
+                            "/enterprise|" +
+                            "/features|" +
+                            "/topics|" +
+                            "/collections|" +
+                            "/trending|" +
+                            "/events|" +
+                            "/marketplace|" +
+                            "/pricing|" +
+                            "/nonprofit|" +
+                            "/customer-stories|" +
+                            "/security|" +
+                            "/login|" +
+                            "/join\$)", RegexOption.IGNORE_CASE
+                )
+            )
+
+
 }
