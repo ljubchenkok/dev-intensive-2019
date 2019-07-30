@@ -20,6 +20,8 @@ import ru.skillbranch.devintensive.viewmodels.ProfileViewModel
 
 
 import android.content.res.Configuration
+import android.text.Editable
+import android.text.TextWatcher
 
 
 class ProfileActivity : AppCompatActivity() {
@@ -44,6 +46,17 @@ class ProfileActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
         viewModel.getProfileData().observe(this, Observer { initUI(it) })
         viewModel.getAppTheme().observe(this, Observer { initTheme(it) })
+        viewModel.getRepoStatus().observe(this, Observer { checkRepoStatus(it) })
+    }
+
+    private fun checkRepoStatus(isRepoValid: Boolean) {
+        if (!isRepoValid) {
+            wr_repository.error = resources.getString(R.string.error_message)
+        } else {
+            wr_repository.error = null
+        }
+
+
     }
 
     private fun initTheme(mode: Int) {
@@ -55,9 +68,9 @@ class ProfileActivity : AppCompatActivity() {
         val initials = Utils.toInitials(profile.firstName, profile.lastName)
         if (initials != null) {
             val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-            val color = if(currentNightMode ==  Configuration.UI_MODE_NIGHT_YES){
-                resources.getColor(R.color.color_accent_night, theme) }
-            else {
+            val color = if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
+                resources.getColor(R.color.color_accent_night, theme)
+            } else {
                 resources.getColor(R.color.color_accent, theme)
             }
             val drawable = TextDrawable.builder()
@@ -70,8 +83,28 @@ class ProfileActivity : AppCompatActivity() {
                 v.text = it[k].toString()
             }
         }
+        addRepoListener()
 
     }
+
+    private fun addRepoListener() {
+        et_repository.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                viewModel.onRepoChanged(s.toString())
+            }
+
+        })
+
+    }
+
 
     private fun saveProfileInfo() {
 
@@ -100,21 +133,10 @@ class ProfileActivity : AppCompatActivity() {
         )
         btn_edit.setOnClickListener {
             if (isEditMode) {
-                if (!Utils.validateUrl(et_repository.text.toString())) {
-                    wr_repository.error = resources.getString(R.string.error_message)
-                    et_repository.text.clear()
-                    et_repository.requestFocus()
-                } else {
-                    saveProfileInfo()
-                    isEditMode = !isEditMode
-                    showCurrentMode(isEditMode)
-                    wr_repository.error = null
-                }
-
-            } else {
+                saveProfileInfo()
+            }
                 isEditMode = !isEditMode
                 showCurrentMode(isEditMode)
-            }
 
         }
         btn_switch_theme.setOnClickListener {
