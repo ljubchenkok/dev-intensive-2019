@@ -97,7 +97,7 @@ object Utils {
     }
 
     fun validateUrl(url: String): Boolean = url.isEmpty() || (
-            url.matches("^(https://)?(www.)?github.com/(?=.{1,39}\$)(?![-])(?!.*[-]{2})[a-zA-Z0-9-]+(?<![-])$".toRegex())) &&
+            url.matches("^(https://)?(www.)?github.com/(?=.{1,39}\$)(?![-_])(?!.*[-_]{2})[a-zA-Z0-9-_]+(?<![-])$".toRegex())) &&
             !url.matches( Regex("^.*(/enterprise|/features|/topics|/collections|/trending|/events|/marketplace|/pricing|/nonprofit|/customer-stories|/security|/login|/join\$)",
                 RegexOption.IGNORE_CASE)
             )
