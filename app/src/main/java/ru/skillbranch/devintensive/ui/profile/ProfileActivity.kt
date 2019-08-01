@@ -1,10 +1,13 @@
 package ru.skillbranch.devintensive.ui.profile
 
 
+import android.content.res.Configuration
 import android.graphics.ColorFilter
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -17,11 +20,6 @@ import ru.skillbranch.devintensive.models.Profile
 import ru.skillbranch.devintensive.ui.custom.TextDrawable
 import ru.skillbranch.devintensive.utils.Utils
 import ru.skillbranch.devintensive.viewmodels.ProfileViewModel
-
-
-import android.content.res.Configuration
-import android.text.Editable
-import android.text.TextWatcher
 
 
 class ProfileActivity : AppCompatActivity() {
@@ -52,7 +50,14 @@ class ProfileActivity : AppCompatActivity() {
     private fun checkRepoStatus(isRepoValid: Boolean) {
         if (!isRepoValid) {
             wr_repository.error = resources.getString(R.string.error_message)
+            wr_repository.isErrorEnabled = true
+            sv_main.postDelayed({
+               sv_main.scrollTo(0, sv_main.bottom)
+            },
+            100)
+
         } else {
+            wr_repository.isErrorEnabled = false
             wr_repository.error = null
         }
 
@@ -97,6 +102,7 @@ class ProfileActivity : AppCompatActivity() {
 
             }
 
+
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 viewModel.onRepoChanged(s.toString())
             }
@@ -135,8 +141,8 @@ class ProfileActivity : AppCompatActivity() {
             if (isEditMode) {
                 saveProfileInfo()
             }
-                isEditMode = !isEditMode
-                showCurrentMode(isEditMode)
+            isEditMode = !isEditMode
+            showCurrentMode(isEditMode)
 
         }
         btn_switch_theme.setOnClickListener {
