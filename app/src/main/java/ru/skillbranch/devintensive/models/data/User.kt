@@ -1,4 +1,4 @@
-package ru.skillbranch.devintensive.models
+package ru.skillbranch.devintensive.models.data
 
 import ru.skillbranch.devintensive.utils.Utils
 import java.util.*
@@ -12,7 +12,25 @@ data class User(
     var respect: Int = 0,
     var lastVisit: Date? = Date(),
     var isOnline: Boolean = false
+
 ) {
+    var nickName: String = "John Doe"
+        get() {
+            when {
+                firstName != null && lastName == null -> return Utils.transliteration(
+                    "@$firstName",
+                    "_"
+                ).trimStart('_').trimEnd('_')
+                firstName == null && lastName != null -> return Utils.transliteration(
+                    "@$lastName",
+                    "_"
+                ).trimStart('_').trimEnd('_')
+                else -> return Utils.transliteration("@$firstName $lastName", "_").trimStart('_')
+                    .trimEnd('_')
+            }
+        }
+
+
     constructor(id: String, firstName: String?, lastName: String?) : this(
         id = id,
         firstName = firstName,
@@ -26,7 +44,11 @@ data class User(
         fun makeUser(fullName: String?): User {
             lastId = lastId++
             val (firstName, secondName) = Utils.parseFullName(fullName)
-            return User("$lastId", firstName, secondName)
+            return User(
+                "$lastId",
+                firstName,
+                secondName
+            )
         }
     }
 
@@ -49,7 +71,16 @@ data class User(
         fun lastVisit(lastVisit: Date?) = apply { this.lastVisit = lastVisit }
         fun isOnline(isOnline: Boolean) = apply { this.isOnline = isOnline }
         fun build() =
-            User(id ?: "${++lastId}", firstName, lastName, avatar, rating, respect, lastVisit, isOnline)
+            User(
+                id ?: "${++lastId}",
+                firstName,
+                lastName,
+                avatar,
+                rating,
+                respect,
+                lastVisit,
+                isOnline
+            )
 
 
     }

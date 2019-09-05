@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_size"
+        android:orientation="vertical"
+        android:background="@android:color/white"
+        android:padding="@dimen/spacing_normal_16">
+
+    <ru.skillbranch.devintensive.ui.custom.CircleImageView
+            android:id="@+id/iv_avatar_single"
+            android:layout_width="@dimen/avatar_item_size"
+            android:layout_height="@dimen/avatar_item_size"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/avatar_default"
+            app:img_drawImageReplace="false"
+            app:img_strokeColor="@color/color_accent" />
+    <View
+            android:id="@+id/sv_indicator"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="@drawable/bg_indicator"
+            android:layout_toLeftOf="@+id/tv_title_single"
+            android:layout_alignParentBottom="true"
+        />
+
+    <TextView
+            android:id="@+id/tv_title_single"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/spacing_normal_16"
+            android:layout_marginRight="@dimen/spacing_normal_16"
+            android:layout_toRightOf="@+id/iv_avatar_single"
+            android:layout_toLeftOf="@id/tv_date_single"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/color_primary"
+            android:textSize="14sp"
+            tools:text="chat title" />
+
+    <TextView
+            android:id="@+id/tv_message_single"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_title_single"
+            android:layout_marginLeft="@dimen/spacing_normal_16"
+            android:layout_marginRight="@dimen/spacing_normal_16"
+            android:layout_toRightOf="@+id/iv_avatar_single"
+            android:layout_toLeftOf="@id/tv_counter_single"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/color_gray_dark"
+            android:textSize="14sp"
+            tools:text="chat message" />
+
+    <TextView
+            android:id="@+id/tv_date_single"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:textSize="10sp"
+            android:textColor="@color/color_gray_dark"
+            tools:text="11.12.2019" />
+
+    <TextView
+            android:minWidth="@dimen/counter_size"
+            android:id="@+id/tv_counter_single"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/counter_size"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:textSize="10sp"
+            android:gravity="center"
+            android:paddingLeft="@dimen/spacing_tiny_4"
+            android:paddingRight="@dimen/spacing_tiny_4"
+            android:background="@drawable/bg_counter"
+            android:textColor="@android:color/white"
+            tools:text="12" />
+
+
+</RelativeLayout>

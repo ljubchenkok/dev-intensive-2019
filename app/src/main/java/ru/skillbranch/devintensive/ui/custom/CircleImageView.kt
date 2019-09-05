@@ -171,5 +171,14 @@ class CircleImageView @JvmOverloads constructor(context: Context, attrs: Attribu
         return bitmap
     }
 
+    fun setInitials(initials: String, color: Int = Color.BLUE){
+        if (initials != null) {
+            val drawable = TextDrawable.builder()
+                .buildRound(initials, color)
+         setImageDrawable(drawable)
+         setupBitmap()
+        }
+    }
+
 
 }

@@ -7,6 +7,15 @@
         <attr name="cv_borderWidth" format="dimension"/>
         <attr name="cv_borderColor" format="color"/>
     </declare-styleable>
+    <declare-styleable name="AvatarImageView">
+        <attr name="img_drawImageReplace" format="boolean" />
+        <attr name="img_foregroundColorPressed" format="color" />
+        <attr name="img_roundAsCircle" format="boolean" />
+        <attr name="img_roundedCorner" format="dimension" />
+        <attr name="img_strokeColor" format="color" />
+        <attr name="img_strokeWidth" format="dimension" />
+    </declare-styleable>
+
 
     <attr name="colorAccentedSurface" format="reference"/>
     <attr name="colorDivider" format="reference"/>
