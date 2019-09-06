@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.annotation.VisibleForTesting
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import kotlinx.android.extensions.LayoutContainer
@@ -64,7 +65,7 @@ class UserAdapter(val listener: (UserItem) -> Unit) :
 
         fun bind(item: UserItem, listener: (UserItem) -> Unit) {
             if(item.avatar !=null){
-                GlideApp.with(itemView)
+                Glide.with(itemView)
                     .asBitmap()
                     .load(item.avatar)
                     .into(object : CustomTarget<Bitmap>(){
@@ -76,7 +77,7 @@ class UserAdapter(val listener: (UserItem) -> Unit) :
                         }
                     })
             } else {
-                GlideApp.with(itemView)
+                Glide.with(itemView)
                     .clear(iv_avatar_user)
                 itemView.iv_avatar_user.setInitials(item.initials ?: "??")
             }

@@ -96,11 +96,11 @@ class ChatAdapter(val listener: (ChatItem) -> Unit) :
 
         override fun bind(item: ChatItem, listener: (ChatItem) -> Unit) {
             if(item.avatar == null) {
-                GlideApp.with(itemView)
+                Glide.with(itemView)
                     .clear(iv_avatar_single)
                 itemView.iv_avatar_single.setInitials(item.initials)
             } else {
-                GlideApp.with(itemView)
+                Glide.with(itemView)
                     .asBitmap()
                     .load(item.avatar)
                     .into(object : CustomTarget<Bitmap>(){
