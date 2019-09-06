@@ -12,12 +12,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_chat_single.*
 import kotlinx.android.synthetic.main.item_chat_single.sv_indicator
-import kotlinx.android.synthetic.main.item_chat_single.view.*
 import kotlinx.android.synthetic.main.item_user_list.*
 import kotlinx.android.synthetic.main.item_user_list.view.*
-import ru.skillbranch.devintensive.GlideApp
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.models.data.UserItem
 

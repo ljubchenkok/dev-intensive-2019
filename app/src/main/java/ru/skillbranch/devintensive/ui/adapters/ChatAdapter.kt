@@ -16,11 +16,9 @@ import kotlinx.android.synthetic.main.item_chat_group.*
 import kotlinx.android.synthetic.main.item_chat_group.view.*
 import kotlinx.android.synthetic.main.item_chat_single.*
 import kotlinx.android.synthetic.main.item_chat_single.view.*
-import ru.skillbranch.devintensive.GlideApp
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.models.data.ChatItem
 import ru.skillbranch.devintensive.models.data.ChatType
-import ru.skillbranch.devintensive.ui.custom.TextDrawable
 
 class ChatAdapter(val listener: (ChatItem) -> Unit) :
     RecyclerView.Adapter<ChatAdapter.ChatItemViewHolder>() {
