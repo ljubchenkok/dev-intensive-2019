@@ -7,4 +7,7 @@
     <string name="profile_hint_last_name">Фамилия</string>
     <string name="profile_hint_first_name">Имя</string>
     <string name="error_message">Невалидный адрес репозитория</string>
+    <string name="menu_search_title">Поиск</string>
+    <string name="snackbar_text">"Вы точно хотите добавить %1s в архив?"</string>
 </resources>
+

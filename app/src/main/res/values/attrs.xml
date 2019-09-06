@@ -21,4 +21,7 @@
     <attr name="colorDivider" format="reference"/>
     <attr name="colorIcon" format="reference"/>
 
+    <attr name="colorItemBackground" format="reference"/>
+    <attr name="colorItemTextTitle" format="reference"/>
+
 </resources>
