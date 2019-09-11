@@ -201,6 +201,9 @@ class ChatAdapter(private val listener: (ChatItem) -> Unit) :
                 if (item.messageCount != 0) View.VISIBLE else View.GONE
                 text = item.messageCount.toString()
             }
+            itemView.setOnClickListener {
+                listener.invoke(item)
+            }
 
 
         }

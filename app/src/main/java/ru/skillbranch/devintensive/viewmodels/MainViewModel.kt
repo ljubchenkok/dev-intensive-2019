@@ -15,11 +15,11 @@ internal class MainViewModel : ViewModel() {
 
     private val query = mutableLiveData("")
     private val chatRepository = ChatRepository
+    private val chats = chatRepository.loadChats()
 
-    private val chats = Transformations.map(chatRepository.loadChats()) { chats ->
+    private val activeChats = Transformations.map(chats) { chats ->
         if (chats.none { it.isArchived }) {
-            return@map chats.filter { !it.isArchived }
-                .map { it.toChatItem() }.sortedBy { it.id.toInt() }
+            return@map chats.map { it.toChatItem() }.sortedBy { it.id.toInt() }
         } else {
             val chatItem =
                 getArchiveSummary(chats.filter { it.isArchived })
@@ -32,6 +32,11 @@ internal class MainViewModel : ViewModel() {
         }
 
     }
+
+    private val archiveChats = Transformations.map(chats) { chats ->
+            return@map chats.filter { it.isArchived }
+                .map { it.toChatItem() }
+        }
 
     private fun getArchiveSummary(chats: List<Chat>): ChatItem {
         var count = 0
@@ -57,15 +62,25 @@ internal class MainViewModel : ViewModel() {
     }
 
 
-    fun getChatData(): LiveData<List<ChatItem>> {
+    fun getChatData(isArchived:Boolean = false): LiveData<List<ChatItem>> {
         val result = MediatorLiveData<List<ChatItem>>()
         val filterF = {
             val queryString = query.value!!
-            result.value = if (queryString.isEmpty()) chats.value
-            else chats.value?.filter { it.title.contains(queryString, true) }
+            result.value = if (queryString.isEmpty()) activeChats.value
+            else activeChats.value?.filter { it.title.contains(queryString, true) }
         }
-        result.addSource(chats) { filterF.invoke() }
-        result.addSource(query) { filterF.invoke() }
+        val filterFA = {
+            val queryString = query.value!!
+            result.value = if (queryString.isEmpty()) archiveChats.value
+            else archiveChats.value?.filter { it.title.contains(queryString, true) }
+        }
+        if(!isArchived) {
+            result.addSource(activeChats) { filterF.invoke() }
+            result.addSource(query) { filterF.invoke() }
+        } else {
+            result.addSource(archiveChats) { filterFA.invoke() }
+            result.addSource(query) { filterFA.invoke() }
+        }
         return result
     }
 

@@ -9,6 +9,7 @@
     <string name="error_message">Невалидный адрес репозитория</string>
     <string name="menu_search_title">Поиск</string>
     <string name="snackbar_text">"Вы точно хотите добавить %1s в архив?"</string>
+    <string name="snackbar_archive_text">"Восстановить чат с %1s из архива?"</string>
     <string name="archive_title">Архив</string>
 </resources>
 
