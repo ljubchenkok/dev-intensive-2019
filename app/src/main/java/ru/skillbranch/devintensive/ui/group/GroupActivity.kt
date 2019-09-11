@@ -19,13 +19,6 @@ import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.models.data.UserItem
 import ru.skillbranch.devintensive.ui.adapters.UserAdapter
 import ru.skillbranch.devintensive.viewmodels.GroupViewModel
-import androidx.core.view.MenuItemCompat
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
-
 
 
 class GroupActivity : AppCompatActivity() {
@@ -35,7 +28,7 @@ class GroupActivity : AppCompatActivity() {
     private lateinit var viewModel: GroupViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-//        setTheme(R.style.AppTheme)
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_group)
         initToolbar()
@@ -45,10 +38,7 @@ class GroupActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_search, menu)
-        val searchView =
-            MenuItemCompat.getActionView(menu?.findItem(R.id.action_search)) as SearchView
-//        val searchItem = menu?.findItem(R.id.search_view)
-//        val searchView = searchItem?.actionView as SearchView?
+        val searchView = (menu?.findItem(R.id.action_search))?.actionView as SearchView
         searchView?.queryHint = "Введите имя пользователя"
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {

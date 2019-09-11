@@ -4,8 +4,10 @@ package ru.skillbranch.devintensive.ui.main
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.view.Menu
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -27,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-//        setTheme(R.style.AppTheme)
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initToolbar()
@@ -36,6 +38,29 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_search, menu)
+        val searchView = (menu?.findItem(R.id.action_search))?.actionView as SearchView
+        searchView?.queryHint = "Введите имя пользователя"
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                viewModel.handleSearchQuery(query)
+                return true
+
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.handleSearchQuery(newText)
+                return true
+
+
+            }
+
+        })
+        return super.onCreateOptionsMenu(menu)
+    }
+
 
     private fun initToolbar() {
         setSupportActionBar(toolbar)

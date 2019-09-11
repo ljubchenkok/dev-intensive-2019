@@ -39,8 +39,12 @@ class CircleImageView @JvmOverloads constructor(context: Context, attrs: Attribu
         borderWidth = DEFAULT_BORDER_WIDTH
         if (attrs != null) {
             val a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView, 0, 0)
-            borderColor = a.getColor(R.styleable.CircleImageView_cv_borderColor, DEFAULT_BORDER_COLOR)
-            borderWidth = a.getDimensionPixelSize(R.styleable.CircleImageView_cv_borderWidth, DEFAULT_BORDER_WIDTH)
+            borderColor =
+                a.getColor(R.styleable.CircleImageView_cv_borderColor, DEFAULT_BORDER_COLOR)
+            borderWidth = a.getDimensionPixelSize(
+                R.styleable.CircleImageView_cv_borderWidth,
+                DEFAULT_BORDER_WIDTH
+            )
             a.recycle()
         }
 
@@ -163,7 +167,8 @@ class CircleImageView @JvmOverloads constructor(context: Context, attrs: Attribu
             return drawable.bitmap
         }
         val width = if (drawable.intrinsicWidth == -1) DEFAULT_WIDTH else drawable.intrinsicWidth
-        val height = if (drawable.intrinsicHeight == -1) DEFAULT_HEIGHT else drawable.intrinsicHeight
+        val height =
+            if (drawable.intrinsicHeight == -1) DEFAULT_HEIGHT else drawable.intrinsicHeight
         bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         drawable.setBounds(0, 0, canvas.width, canvas.height)
@@ -171,13 +176,13 @@ class CircleImageView @JvmOverloads constructor(context: Context, attrs: Attribu
         return bitmap
     }
 
-    fun setInitials(initials: String, color: Int = Color.BLUE){
-        if (initials != null) {
-            val drawable = TextDrawable.builder()
-                .buildRound(initials, color)
-         setImageDrawable(drawable)
-         setupBitmap()
-        }
+    fun setInitials(initials: String, color: Int = Color.BLUE) {
+
+        val drawable = TextDrawable.builder()
+            .buildRound(initials, color)
+        setImageDrawable(drawable)
+        setupBitmap()
+
     }
 
 

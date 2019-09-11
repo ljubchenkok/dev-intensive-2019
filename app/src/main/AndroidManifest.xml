@@ -13,6 +13,7 @@
             android:supportsRtl="true"
             android:theme="@style/SplashTheme">
         <activity android:name=".ui.group.GroupActivity"></activity>
+        <activity android:name=".ui.profile.ProfileActivity"></activity>
         <activity
                 android:name=".ui.main.MainActivity"
                 android:windowSoftInputMode="adjustResize">

@@ -1,4 +1,8 @@
 <resources>
+
+    <style name="PopUpTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
+    <style name="PopUpTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
+
     <style name="Profile">
 
     </style>
@@ -54,6 +58,8 @@
         <item name="android:paddingRight">@dimen/spacing_normal_16</item>
         <item name="android:minHeight">72dp</item>
     </style>
+
+
 
 
 
