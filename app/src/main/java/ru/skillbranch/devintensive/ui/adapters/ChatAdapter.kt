@@ -155,7 +155,7 @@ class ChatAdapter(private val listener: (ChatItem) -> Unit) :
             itemView.tv_message_group.text = item.shortDescription
             with(tv_message_author) {
                 if (item.messageCount != 0) View.VISIBLE else View.GONE
-                itemView.tv_message_author.text = item.author
+                itemView.tv_message_author.text = "@${item.author}"
             }
             with(tv_date_group) {
                 if (item.lastMessageDate != null) View.VISIBLE else View.GONE
@@ -191,7 +191,7 @@ class ChatAdapter(private val listener: (ChatItem) -> Unit) :
             itemView.tv_message_archive.text = item.shortDescription
             with(tv_message_author_archive) {
                 if (item.author != null) View.VISIBLE else View.GONE
-                text = item.author
+                text = "@${item.author}"
             }
             with(tv_date_archive) {
                 if (item.lastMessageDate != null) View.VISIBLE else View.GONE
