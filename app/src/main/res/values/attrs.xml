@@ -20,8 +20,15 @@
     <attr name="colorAccentedSurface" format="reference"/>
     <attr name="colorDivider" format="reference"/>
     <attr name="colorIcon" format="reference"/>
-
+    <attr name="colorToolbar" format="reference"/>
     <attr name="colorItemBackground" format="reference"/>
-    <attr name="colorItemTextTitle" format="reference"/>
+    <attr name="colorItemTitle" format="reference"/>
+    <attr name="colorItemMessage" format="reference"/>
+    <attr name="colorItemDate" format="reference"/>
+    <attr name="colorItemIndicator" format="reference"/>
+    <attr name="colorItemCount" format="reference"/>
+    <attr name="colorSwipeBackground" format="reference"/>
+    <attr name="colorArchiveBackground" format="reference"/>
+    <attr name="colorSelectedItemBackground" format="reference"/>
 
 </resources>

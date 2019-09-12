@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Base application theme. -->
-    <style name="MyTheme" parent="Theme.MaterialComponents.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@android:color/white</item>
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorPrimary">@color/color_primary_night</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark_night</item>
         <item name="colorAccent">@color/color_accent_night</item>
-
         <item name="colorAccentedSurface">@color/color_divider_light</item>
         <item name="colorIcon">@android:color/white</item>
-        <item name="colorDivider">@color/color_divider_dark</item>
+        <item name="colorDivider">@color/color_divider_light</item>
         <item name="android:statusBarColor">@android:color/black</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowAnimationStyle">@style/ActivityTransitions</item>
+        <item name="colorItemBackground">@color/color_item_bkg_night</item>
+        <item name="colorItemTitle">@color/color_item_title_night</item>
+        <item name="colorItemMessage">@color/color_item_message_night</item>
+        <item name="colorItemDate">@color/color_date_night</item>
+        <item name="colorItemCount">@color/color_counter_bkg_night</item>
+        <item name="colorItemIndicator">@color/color_indicator_bkg_night</item>
+        <item name="colorSwipeBackground">@color/color_swipe_night</item>
+        <item name="colorArchiveBackground">@color/color_archive_night</item>
+        <item name="colorSelectedItemBackground">@color/color_gray_dark</item>
 
     </style>
+
 </resources>

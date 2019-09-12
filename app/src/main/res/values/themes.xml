@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <item name="colorAccent">@color/color_accent</item>
-
         <item name="colorAccentedSurface">@color/color_primary_light</item>
         <item name="colorIcon">@color/color_gray</item>
         <item name="colorDivider">@color/color_divider_dark</item>
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:windowAnimationStyle">@style/ActivityTransitions</item>
+        <item name="colorItemBackground">@color/color_item_bkg</item>
+        <item name="colorItemTitle">@color/color_item_title</item>
+        <item name="colorItemMessage">@color/color_item_message</item>
+        <item name="colorItemDate">@color/color_date</item>
+        <item name="colorItemCount">@color/color_counter_bkg</item>
+        <item name="colorItemIndicator">@color/color_indicator_bkg</item>
+        <item name="colorSwipeBackground">@color/color_swipe</item>
+        <item name="colorArchiveBackground">@color/color_archive</item>
+        <item name="colorSelectedItemBackground">@color/color_gray_light</item>
+
+
+
 
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar"/>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light"/>
 
     <style name="SplashTheme" parent="AppTheme">
         <item name="android:windowBackground">@drawable/splash_screen</item>
@@ -27,5 +40,7 @@
         <item name="android:activityCloseEnterAnimation">@anim/idle</item>
         <item name="android:activityCloseExitAnimation">@anim/bottom_down</item>
     </style>
+
+
 
 </resources>

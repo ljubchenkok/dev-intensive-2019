@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.activity_group.*
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.models.data.UserItem
 import ru.skillbranch.devintensive.ui.adapters.UserAdapter
+import ru.skillbranch.devintensive.ui.custom.SimpleItemDecorator
 import ru.skillbranch.devintensive.ui.custom.TextDrawable
 import ru.skillbranch.devintensive.utils.Utils
 import ru.skillbranch.devintensive.viewmodels.GroupViewModel
@@ -48,8 +49,8 @@ class GroupActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_search, menu)
         val searchView = (menu?.findItem(R.id.action_search))?.actionView as SearchView
-        searchView?.queryHint = "Введите имя пользователя"
-        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        searchView.queryHint = "Введите имя пользователя"
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 viewModel.handleSearchQuery(query)
                 return true
@@ -84,11 +85,11 @@ class GroupActivity : AppCompatActivity() {
 
     private fun initViews() {
         userAdapter = UserAdapter { viewModel.handleSelectedItems(it.id) }
-        val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+
         with(rv_user_list) {
             adapter = userAdapter
             layoutManager = LinearLayoutManager(this@GroupActivity)
-            addItemDecoration(divider)
+            addItemDecoration(SimpleItemDecorator(this@GroupActivity))
         }
         fab.setOnClickListener {
             viewModel.handleCreateGroup()

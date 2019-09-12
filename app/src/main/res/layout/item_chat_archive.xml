@@ -5,8 +5,9 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_size"
         android:orientation="vertical"
-        android:background="@android:color/white"
-        android:padding="@dimen/spacing_normal_16">
+        android:background="?attr/colorItemBackground"
+        android:padding="@dimen/spacing_normal_16"
+        >
 
     <ImageView
             android:id="@+id/iv_avatar_archive"
@@ -28,7 +29,7 @@
             android:layout_toEndOf="@+id/iv_avatar_archive"
             android:layout_toStartOf="@id/tv_date_archive"
             android:fontFamily="sans-serif-medium"
-            android:textColor="@color/color_primary"
+            android:textColor="?attr/colorItemTitle"
             android:textSize="14sp"
             tools:text="@string/archive_title"
             android:maxLines="1"/>
@@ -41,7 +42,7 @@
             android:layout_marginEnd="@dimen/spacing_tiny_4"
             android:layout_toEndOf="@+id/iv_avatar_archive"
             android:fontFamily="sans-serif-medium"
-            android:textColor="@color/color_primary"
+            android:textColor="?attr/colorItemTitle"
             android:textSize="14sp"
             tools:text="John_Doe"
             />
@@ -56,7 +57,7 @@
             android:layout_toEndOf="@+id/tv_message_author_archive"
             android:layout_toStartOf="@id/tv_counter_archive"
             android:fontFamily="sans-serif-medium"
-            android:textColor="@color/color_gray_dark"
+            android:textColor="?attr/colorItemMessage"
             android:textSize="14sp"
             tools:text="chat message" />
 
@@ -67,7 +68,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:textSize="10sp"
-            android:textColor="@color/color_gray_dark"
+            android:textColor="?attr/colorItemDate"
             tools:text="11.12.2019" />
 
     <TextView

@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -19,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_main.toolbar
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.ui.adapters.ChatAdapter
 import ru.skillbranch.devintensive.ui.adapters.ChatItemTouchHelperCallback
+import ru.skillbranch.devintensive.ui.custom.SimpleItemDecorator
 import ru.skillbranch.devintensive.viewmodels.MainViewModel
 
 class ArchiveActivity : AppCompatActivity() {
@@ -29,6 +31,7 @@ class ArchiveActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
+        delegate.setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_archive)
         setTitle("Архив чатов")
@@ -82,8 +85,7 @@ class ArchiveActivity : AppCompatActivity() {
         chatAdapter = ChatAdapter {
             Snackbar.make(rv_archive_list, "Click on ${it.title}", Snackbar.LENGTH_LONG).show()
         }
-        val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
-        val touchCallback = ChatItemTouchHelperCallback(chatAdapter) {
+        val touchCallback = ChatItemTouchHelperCallback(chatAdapter, true) {
             val chatId = it.id
             viewModel.restoreFromArchive(chatId)
             val snackbar = Snackbar.make(
@@ -104,7 +106,7 @@ class ArchiveActivity : AppCompatActivity() {
         with(rv_archive_list) {
             adapter = chatAdapter
             layoutManager = LinearLayoutManager(this@ArchiveActivity)
-            addItemDecoration(divider)
+            addItemDecoration(SimpleItemDecorator(this@ArchiveActivity))
         }
     }
 

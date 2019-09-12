@@ -2,6 +2,7 @@ package ru.skillbranch.devintensive.utils
 
 import android.content.Context
 import android.graphics.Color
+import android.util.TypedValue
 import ru.skillbranch.devintensive.R
 import java.net.MalformedURLException
 import java.net.URL
@@ -121,6 +122,12 @@ object Utils {
             else -> context.resources.getColor(R.color.avatar_color_8, context.theme)
         }
 
+    }
+
+    fun getColorFromAttribute(attribute: Int, context: Context):Int{
+        val value = TypedValue()
+        context.theme.resolveAttribute(attribute, value, true)
+        return value.data
     }
 }
 
