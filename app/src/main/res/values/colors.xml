@@ -14,4 +14,13 @@
     <color name="color_divider_light">#1FFFFFFF</color>
     <color name="color_indicator">#581F99</color>
     <color name="green_dark">#4FD149</color>
+
+    <color name="avatar_color_1">#4FD149</color>
+    <color name="avatar_color_2">#2196F3</color>
+    <color name="avatar_color_3">#E91E63</color>
+    <color name="avatar_color_4">#9C27B0</color>
+    <color name="avatar_color_5">#00BCD4</color>
+    <color name="avatar_color_6">#8BC34A</color>
+    <color name="avatar_color_7">#4CAF50</color>
+    <color name="avatar_color_8">#64B5F6</color>
 </resources>

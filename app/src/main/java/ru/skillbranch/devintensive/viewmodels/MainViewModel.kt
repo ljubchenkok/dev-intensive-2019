@@ -39,10 +39,7 @@ internal class MainViewModel : ViewModel() {
         }
 
     private fun getArchiveSummary(chats: List<Chat>): ChatItem {
-        var count = 0
-        chats.forEach() {
-            count += it.unreadableMessageCount()
-        }
+        val count = chats.sumBy { it.unreadableMessageCount() }
         val lastChat =
             chats.lastOrNull { it.unreadableMessageCount() != 0 } ?: chats.last()
 

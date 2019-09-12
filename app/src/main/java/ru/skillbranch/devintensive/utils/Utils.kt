@@ -1,5 +1,8 @@
 package ru.skillbranch.devintensive.utils
 
+import android.content.Context
+import android.graphics.Color
+import ru.skillbranch.devintensive.R
 import java.net.MalformedURLException
 import java.net.URL
 
@@ -98,9 +101,26 @@ object Utils {
 
     fun validateUrl(url: String): Boolean = url.isEmpty() || (
             url.matches("^(https://)?(www.)?github.com/(?=.{1,39}\$)(?![-_])(?!.*[-_]{2})[a-zA-Z0-9-_]+(?<![-])$".toRegex())) &&
-            !url.matches( Regex("^.*(/enterprise|/features|/topics|/collections|/trending|/events|/marketplace|/pricing|/nonprofit|/customer-stories|/security|/login|/join\$)",
-                RegexOption.IGNORE_CASE)
+            !url.matches(
+                Regex(
+                    "^.*(/enterprise|/features|/topics|/collections|/trending|/events|/marketplace|/pricing|/nonprofit|/customer-stories|/security|/login|/join\$)",
+                    RegexOption.IGNORE_CASE
+                )
             )
 
 
+    fun getColorFromInitials(initials: String, context: Context): Int {
+        return when (initials.hashCode()%10) {
+            1 -> context.resources.getColor(R.color.avatar_color_1, context.theme)
+            2 -> context.resources.getColor(R.color.avatar_color_2, context.theme)
+            3 -> context.resources.getColor(R.color.avatar_color_3, context.theme)
+            4 -> context.resources.getColor(R.color.avatar_color_4, context.theme)
+            5 -> context.resources.getColor(R.color.avatar_color_5, context.theme)
+            6 -> context.resources.getColor(R.color.avatar_color_6, context.theme)
+            7 -> context.resources.getColor(R.color.avatar_color_7, context.theme)
+            else -> context.resources.getColor(R.color.avatar_color_8, context.theme)
+        }
+
+    }
 }
+

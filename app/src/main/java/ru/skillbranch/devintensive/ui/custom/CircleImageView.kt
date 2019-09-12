@@ -11,6 +11,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.Dimension
 import ru.skillbranch.devintensive.R
+import ru.skillbranch.devintensive.utils.Utils
 
 class CircleImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     ImageView(context, attrs) {
@@ -176,8 +177,8 @@ class CircleImageView @JvmOverloads constructor(context: Context, attrs: Attribu
         return bitmap
     }
 
-    fun setInitials(initials: String, color: Int = Color.BLUE) {
-
+    fun setInitials(initials: String) {
+        val color = Utils.getColorFromInitials(initials, context)
         val drawable = TextDrawable.builder()
             .buildRound(initials, color)
         setImageDrawable(drawable)
