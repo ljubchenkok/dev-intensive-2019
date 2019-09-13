@@ -20,6 +20,12 @@
         <item name="colorSwipeBackground">@color/color_swipe</item>
         <item name="colorArchiveBackground">@color/color_archive</item>
         <item name="colorSelectedItemBackground">@color/color_gray_light</item>
+        <item name="colorSelectedUserItem">@color/color_selected_user</item>
+        <item name="colorChipGroup">@android:color/white</item>
+        <item name="colorChip">@color/color_chip</item>
+        <item name="colorSnackBarBackground">@color/color_snackbar_background</item>
+        <item name="colorSnackBarText">@color/color_snackbar_text</item>
+
 
 
 

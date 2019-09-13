@@ -30,5 +30,10 @@
     <attr name="colorSwipeBackground" format="reference"/>
     <attr name="colorArchiveBackground" format="reference"/>
     <attr name="colorSelectedItemBackground" format="reference"/>
+    <attr name="colorSelectedUserItem" format="reference"/>
+    <attr name="colorChipGroup" format="reference"/>
+    <attr name="colorChip" format="reference"/>
+    <attr name="colorSnackBarBackground" format="reference"/>
+    <attr name="colorSnackBarText" format="reference"/>
 
 </resources>

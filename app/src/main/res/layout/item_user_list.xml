@@ -40,7 +40,7 @@
             tools:text="User Name"
             android:textSize="14sp"
             android:fontFamily="sans-serif-medium"
-            android:textColor="@color/color_primary"
+            android:textColor="?attr/colorItemTitle"
             android:layout_toRightOf="@+id/iv_avatar_user"
             android:layout_marginLeft="@dimen/spacing_normal_16"
             />
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             tools:text="online"
-            android:textColor="@color/color_gray_dark"
+            android:textColor="?attr/colorItemMessage"
             android:layout_toRightOf="@+id/iv_avatar_user"
             android:layout_marginLeft="@dimen/spacing_normal_16"
             android:layout_below="@+id/tv_user_name"/>

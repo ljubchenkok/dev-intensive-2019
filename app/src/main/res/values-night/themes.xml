@@ -21,6 +21,11 @@
         <item name="colorSwipeBackground">@color/color_swipe_night</item>
         <item name="colorArchiveBackground">@color/color_archive_night</item>
         <item name="colorSelectedItemBackground">@color/color_gray_dark</item>
+        <item name="colorSelectedUserItem">@color/color_selected_user_night</item>
+        <item name="colorChipGroup">@color/color_chip_group_night</item>
+        <item name="colorChip">@color/color_chip_night</item>
+        <item name="colorSnackBarBackground">@color/color_snackbar_background_night</item>
+        <item name="colorSnackBarText">@color/color_snackbar_text_night</item>
 
     </style>
 

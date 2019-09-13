@@ -31,8 +31,10 @@ import androidx.core.app.ComponentActivity
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.view.View
 
 import ru.skillbranch.devintensive.ui.custom.SimpleItemDecorator
+import ru.skillbranch.devintensive.utils.Utils
 
 
 class MainActivity : AppCompatActivity() {
@@ -43,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
-        delegate.setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+//        delegate.setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initToolbar()
@@ -56,8 +58,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_search, menu)
         val searchView = (menu?.findItem(R.id.action_search))?.actionView as SearchView
-        searchView?.queryHint = "Введите имя пользователя"
-        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        searchView.queryHint = "Введите имя пользователя"
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 viewModel.handleSearchQuery(query)
                 return true
@@ -93,15 +95,7 @@ class MainActivity : AppCompatActivity() {
         val touchCallback = ChatItemTouchHelperCallback(chatAdapter, false) {
             val chatId = it.id
             viewModel.addToArchive(chatId)
-            val snackbar = Snackbar.make(
-                rv_chat_list,
-                resources.getString(R.string.snackbar_text, it.title),
-                Snackbar.LENGTH_LONG
-            )
-            val view = snackbar.getView();
-            val textView =
-                view.findViewById(com.google.android.material.R.id.snackbar_text) as TextView;
-            textView.setTypeface(null, Typeface.BOLD)
+            val snackbar = Utils.createSnackbar(rv_chat_list, resources.getString(R.string.snackbar_text, it.title), this )
             snackbar.setAction("Отмена") {
                 viewModel.restoreFromArchive(chatId)
             }
@@ -121,6 +115,8 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+
 
 
     private fun initViewModel() {

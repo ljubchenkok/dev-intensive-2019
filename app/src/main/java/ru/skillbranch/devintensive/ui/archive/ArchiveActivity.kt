@@ -21,6 +21,7 @@ import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.ui.adapters.ChatAdapter
 import ru.skillbranch.devintensive.ui.adapters.ChatItemTouchHelperCallback
 import ru.skillbranch.devintensive.ui.custom.SimpleItemDecorator
+import ru.skillbranch.devintensive.utils.Utils
 import ru.skillbranch.devintensive.viewmodels.MainViewModel
 
 class ArchiveActivity : AppCompatActivity() {
@@ -88,14 +89,7 @@ class ArchiveActivity : AppCompatActivity() {
         val touchCallback = ChatItemTouchHelperCallback(chatAdapter, true) {
             val chatId = it.id
             viewModel.restoreFromArchive(chatId)
-            val snackbar = Snackbar.make(
-                rv_archive_list,
-                resources.getString(R.string.snackbar_archive_text, it.title),
-                Snackbar.LENGTH_LONG
-            )
-            val view = snackbar.getView();
-            val textView = view.findViewById(com.google.android.material.R.id.snackbar_text) as TextView;
-            textView.setTypeface(null, Typeface.BOLD)
+            val snackbar = Utils.createSnackbar(rv_archive_list, resources.getString(R.string.snackbar_archive_text, it.title), this )
             snackbar.setAction("Отмена") {
                 viewModel.addToArchive(chatId)
             }

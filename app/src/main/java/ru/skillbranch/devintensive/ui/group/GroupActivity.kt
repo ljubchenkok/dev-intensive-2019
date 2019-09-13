@@ -126,7 +126,7 @@ class GroupActivity : AppCompatActivity() {
             isClickable = true
             closeIconTint = ColorStateList.valueOf(Color.WHITE)
             chipBackgroundColor =
-                ColorStateList.valueOf(getColor(ru.skillbranch.devintensive.R.color.color_primary_light))
+                ColorStateList.valueOf(Utils.getColorFromAttribute(R.attr.colorChip, context))
             setTextColor(Color.WHITE)
         }
         setChipIcon(chip, item)

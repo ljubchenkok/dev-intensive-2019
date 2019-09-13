@@ -42,6 +42,16 @@
     <color name="color_swipe_night">#2196F3</color>
     <color name="color_archive">#9CA9BA</color>
     <color name="color_archive_night">#675F7F</color>
+    <color name="color_selected_user">#2A1956</color>
+    <color name="color_selected_user_night">#2196F3</color>
+    <color name="color_chip">#473770</color>
+    <color name="color_chip_night">#1D1D1D</color>
+    <color name="color_chip_group_night">#121212</color>
+    <color name="color_snackbar_background">#2A1956</color>
+    <color name="color_snackbar_text">#FFFFFF</color>
+    <color name="color_snackbar_text_night">#121212</color>
+    <color name="color_snackbar_background_night">#FFFFFF</color>
+
 
 
 

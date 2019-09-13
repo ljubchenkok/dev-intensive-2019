@@ -3,6 +3,9 @@ package ru.skillbranch.devintensive.utils
 import android.content.Context
 import android.graphics.Color
 import android.util.TypedValue
+import android.view.View
+import android.widget.TextView
+import com.google.android.material.snackbar.Snackbar
 import ru.skillbranch.devintensive.R
 import java.net.MalformedURLException
 import java.net.URL
@@ -128,6 +131,22 @@ object Utils {
         val value = TypedValue()
         context.theme.resolveAttribute(attribute, value, true)
         return value.data
+    }
+
+    fun createSnackbar(view: View, message: String, context: Context): Snackbar {
+        val snackbar = Snackbar.make(
+            view,
+            message,
+            Snackbar.LENGTH_LONG
+        )
+        with(snackbar.view){
+            val textView = findViewById<TextView>(com.google.android.material.R.id.snackbar_text);
+            setBackgroundColor(Utils.getColorFromAttribute(R.attr.colorSnackBarBackground, context))
+            textView.setTextColor(Utils.getColorFromAttribute(R.attr.colorSnackBarText, context ))
+            setBackgroundResource(R.drawable.bg_snackbar)
+        }
+
+        return snackbar
     }
 }
 
