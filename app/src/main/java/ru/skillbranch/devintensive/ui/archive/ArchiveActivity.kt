@@ -32,7 +32,6 @@ class ArchiveActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
-        delegate.setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_archive)
         setTitle("Архив чатов")
@@ -46,8 +45,8 @@ class ArchiveActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_search, menu)
         val searchView = (menu?.findItem(R.id.action_search))?.actionView as SearchView
-        searchView?.queryHint = "Введите имя пользователя"
-        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        searchView.queryHint = "Введите имя пользователя"
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 viewModel.handleSearchQuery(query)
                 return true
