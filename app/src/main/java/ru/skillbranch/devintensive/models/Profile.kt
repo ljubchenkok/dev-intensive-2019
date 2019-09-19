@@ -1,7 +1,6 @@
 package ru.skillbranch.devintensive.models
 
 import ru.skillbranch.devintensive.utils.Utils
-import java.lang.StringBuilder
 
 data class Profile(
     val firstName:String,
@@ -11,7 +10,7 @@ data class Profile(
     val rating:Int = 0,
     val respect:Int = 0
 ){
-    var nickName:String = "John Doe"
+    val nickName:String
         get() {
           return Utils.transliteration("$firstName $lastName", "_").trimStart('_').trimEnd('_')
         }

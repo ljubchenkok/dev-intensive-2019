@@ -2,21 +2,14 @@ package ru.skillbranch.devintensive.ui.main
 
 
 import android.content.Intent
-import android.content.res.Resources
-import android.graphics.Typeface
-import android.graphics.drawable.InsetDrawable
 import android.os.Bundle
 import android.view.Menu
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.skillbranch.devintensive.R
@@ -24,17 +17,10 @@ import ru.skillbranch.devintensive.models.data.ChatType
 import ru.skillbranch.devintensive.ui.adapters.ChatAdapter
 import ru.skillbranch.devintensive.ui.adapters.ChatItemTouchHelperCallback
 import ru.skillbranch.devintensive.ui.archive.ArchiveActivity
-import ru.skillbranch.devintensive.ui.group.GroupActivity
-import ru.skillbranch.devintensive.viewmodels.MainViewModel
-import android.content.res.TypedArray
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.view.View
-
 import ru.skillbranch.devintensive.ui.custom.SimpleItemDecorator
+import ru.skillbranch.devintensive.ui.group.GroupActivity
 import ru.skillbranch.devintensive.utils.Utils
+import ru.skillbranch.devintensive.viewmodels.MainViewModel
 
 
 class MainActivity : AppCompatActivity() {

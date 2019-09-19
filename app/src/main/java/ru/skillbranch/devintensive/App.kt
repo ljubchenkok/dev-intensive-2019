@@ -5,7 +5,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import ru.skillbranch.devintensive.repositories.PreferencesRepository
-import ru.skillbranch.devintensive.repositories.PreferencesRepository.getAppTheme
+
 
 class App : Application() {
     companion object {

@@ -3,9 +3,8 @@ package ru.skillbranch.devintensive.extensions
 import android.app.Activity
 import android.content.Context
 import android.graphics.Rect
-import android.view.inputmethod.InputMethodManager
 import android.util.DisplayMetrics
-import android.util.TypedValue
+import android.view.inputmethod.InputMethodManager
 
 
 fun Activity.hideKeyboard() {

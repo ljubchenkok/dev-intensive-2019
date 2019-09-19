@@ -3,13 +3,10 @@ package ru.skillbranch.devintensive.ui.custom
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.widget.ImageView
-import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
-import androidx.annotation.Dimension
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.utils.Utils
 import kotlin.math.min
@@ -94,14 +91,12 @@ class CircleImageView @JvmOverloads constructor(context: Context, attrs: Attribu
         if (borderPaint.strokeWidth > 0f) {
             canvas.drawOval(borderBounds, borderPaint)
         }
-
     }
 
 
     private fun updateCircleDrawBounds(bounds: RectF) {
         val contentWidth = (width - paddingLeft - paddingRight).toFloat()
         val contentHeight = (height - paddingTop - paddingBottom).toFloat()
-
         var left = paddingLeft.toFloat()
         var top = paddingTop.toFloat()
         if (contentWidth > contentHeight) {
@@ -125,7 +120,6 @@ class CircleImageView @JvmOverloads constructor(context: Context, attrs: Attribu
 
     private fun updateBitmapSize() {
         if (bitmap == null) return
-
         val dx: Float
         val dy: Float
         val scale: Float
@@ -144,30 +138,31 @@ class CircleImageView @JvmOverloads constructor(context: Context, attrs: Attribu
     }
 
     private fun getBitmapFromDrawable(drawable: Drawable?): Bitmap? {
-        if (drawable == null) {
-            return null
+        return when (drawable) {
+            null -> null
+            is BitmapDrawable -> drawable.bitmap
+            else -> {
+                val width =
+                    if (drawable.intrinsicWidth == -1) DEFAULT_WIDTH else drawable.intrinsicWidth
+                val height =
+                    if (drawable.intrinsicHeight == -1) DEFAULT_HEIGHT else drawable.intrinsicHeight
+                bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+                val canvas = Canvas(bitmap!!)
+                drawable.setBounds(0, 0, canvas.width, canvas.height)
+                drawable.draw(canvas)
+                return bitmap
+            }
         }
-        if (drawable is BitmapDrawable) {
-            return drawable.bitmap
-        }
-        val width = if (drawable.intrinsicWidth == -1) DEFAULT_WIDTH else drawable.intrinsicWidth
-        val height =
-            if (drawable.intrinsicHeight == -1) DEFAULT_HEIGHT else drawable.intrinsicHeight
-        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap!!)
-        drawable.setBounds(0, 0, canvas.width, canvas.height)
-        drawable.draw(canvas)
-        return bitmap
     }
 
-    fun setInitials(initials: String) {
-        val color = Utils.getColorFromInitials(initials, context)
-        val drawable = TextDrawable.builder()
-            .buildRound(initials, color)
-        setImageDrawable(drawable)
+        fun setInitials(initials: String) {
+            val color = Utils.getColorFromInitials(initials, context)
+            val drawable = TextDrawable.builder()
+                .buildRound(initials, color)
+            setImageDrawable(drawable)
+
+
+        }
 
 
     }
-
-
-}

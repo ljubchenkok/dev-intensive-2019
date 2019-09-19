@@ -1,20 +1,19 @@
 package ru.skillbranch.devintensive.utils
 
 import android.content.Context
-import android.graphics.Color
 import android.util.TypedValue
 import android.view.View
 import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 import ru.skillbranch.devintensive.R
-import java.net.MalformedURLException
-import java.net.URL
+import java.util.*
+import kotlin.collections.ArrayList
 
 object Utils {
 
     fun parseFullName(fullName: String?): Pair<String?, String?> {
         val splitName: List<String>? = fullName?.split(" ")
-        var splitNameWithoutNull: ArrayList<String> = ArrayList()
+        val splitNameWithoutNull: ArrayList<String> = ArrayList()
         if (splitName != null) {
             for (name in splitName) {
                 if (name.isNotEmpty()) splitNameWithoutNull.add(name)
@@ -40,7 +39,7 @@ object Utils {
         if (lastName != null && lastName.length > 0) {
             last = lastName.capitalize().get(0)
         }
-        var result: String = ""
+        var result = ""
         if (first != null && first.isLetter()) result += first
         if (last != null && last.isLetter()) result += last
         return if (result.isNotEmpty()) result else null
@@ -84,10 +83,10 @@ object Utils {
 
     fun transliteration(payload: String, divider: String = " "): String {
         val names = payload.split(" ")
-        var result: String = ""
+        var result = ""
         for (name in names) {
             name.forEach {
-                if (transliteration_map.containsKey("${it.toString().toLowerCase()}")) {
+                if (transliteration_map.containsKey(it.toString().toLowerCase())) {
                     if (it.isUpperCase()) {
                         result += "${transliteration_map[it.toString().toLowerCase()]?.capitalize()}"
                     } else {
@@ -140,9 +139,9 @@ object Utils {
             Snackbar.LENGTH_LONG
         )
         with(snackbar.view){
-            val textView = findViewById<TextView>(com.google.android.material.R.id.snackbar_text);
-            setBackgroundColor(Utils.getColorFromAttribute(R.attr.colorSnackBarBackground, context))
-            textView.setTextColor(Utils.getColorFromAttribute(R.attr.colorSnackBarText, context ))
+            val textView = findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+            setBackgroundColor(getColorFromAttribute(R.attr.colorSnackBarBackground, context))
+            textView.setTextColor(getColorFromAttribute(R.attr.colorSnackBarText, context ))
             setBackgroundResource(R.drawable.bg_snackbar)
         }
 
