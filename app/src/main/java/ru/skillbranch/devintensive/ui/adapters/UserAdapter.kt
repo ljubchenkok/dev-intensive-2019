@@ -65,14 +65,7 @@ class UserAdapter(val listener: (UserItem) -> Unit) :
                 Glide.with(itemView)
                     .asBitmap()
                     .load(item.avatar)
-                    .into(object : CustomTarget<Bitmap>(){
-                        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                            iv_avatar_user.setImageBitmap(resource)
-                            iv_avatar_user.setupBitmap()
-                        }
-                        override fun onLoadCleared(placeholder: Drawable?) {
-                        }
-                    })
+                    .into(iv_avatar_user)
             } else {
                 Glide.with(itemView)
                     .clear(iv_avatar_user)

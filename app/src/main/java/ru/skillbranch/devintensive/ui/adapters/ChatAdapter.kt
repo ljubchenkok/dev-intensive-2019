@@ -110,14 +110,7 @@ class ChatAdapter(private val listener: (ChatItem) -> Unit) :
                 Glide.with(itemView)
                     .asBitmap()
                     .load(item.avatar)
-                    .into(object : CustomTarget<Bitmap>(){
-                        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                            iv_avatar_single.setImageBitmap(resource)
-                            iv_avatar_single.setupBitmap()
-                        }
-                        override fun onLoadCleared(placeholder: Drawable?) {
-                        }
-                    })
+                    .into(iv_avatar_single)
             }
             itemView.tv_title_single.text = item.title
             itemView.tv_message_single.text = item.shortDescription

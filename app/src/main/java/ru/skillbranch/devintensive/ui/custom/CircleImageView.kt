@@ -60,7 +60,6 @@ class CircleImageView @JvmOverloads constructor(context: Context, attrs: Attribu
         pressedPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         pressedPaint.style = Paint.Style.FILL
         initialized = true
-        setupBitmap()
     }
 
     fun getBorderWidth(): Int = borderWidth
@@ -97,6 +96,7 @@ class CircleImageView @JvmOverloads constructor(context: Context, attrs: Attribu
 
 
     override fun onDraw(canvas: Canvas) {
+        setupBitmap()
         drawBitmap(canvas)
         drawBorder(canvas)
     }
@@ -127,7 +127,7 @@ class CircleImageView @JvmOverloads constructor(context: Context, attrs: Attribu
         bounds.set(left, top, left + diameter, top + diameter)
     }
 
-    public fun setupBitmap() {
+    private fun setupBitmap() {
         if (!initialized) {
             return
         }
@@ -182,7 +182,7 @@ class CircleImageView @JvmOverloads constructor(context: Context, attrs: Attribu
         val drawable = TextDrawable.builder()
             .buildRound(initials, color)
         setImageDrawable(drawable)
-        setupBitmap()
+
 
     }
 

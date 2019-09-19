@@ -81,7 +81,7 @@ class ProfileActivity : AppCompatActivity() {
             val drawable = TextDrawable.builder()
                 .buildRound(initials, color)
             iv_avatar.setImageDrawable(drawable)
-            iv_avatar.setupBitmap()
+
         }
         profile.toMap().also {
             for ((k, v) in viewFilds) {
