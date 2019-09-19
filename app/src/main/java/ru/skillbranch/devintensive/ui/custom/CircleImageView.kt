@@ -12,6 +12,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.Dimension
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.utils.Utils
+import kotlin.math.min
 
 class CircleImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     ImageView(context, attrs) {
@@ -19,14 +20,12 @@ class CircleImageView @JvmOverloads constructor(context: Context, attrs: Attribu
     private var borderColor: Int
     private var borderWidth: Int
     private var bitmapShader: Shader? = null
-    private val shaderMatrix: Matrix
-    private val bitmapDrawBounds: RectF
-    private val borderBounds: RectF
+    private val shaderMatrix = Matrix()
+    private val bitmapDrawBounds = RectF()
+    private val borderBounds = RectF()
     private var bitmap: Bitmap? = null
-    private val bitmapPaint: Paint
-    private val borderPaint: Paint
-    private val pressedPaint: Paint
-    private val initialized: Boolean
+    private val bitmapPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val borderPaint = Paint(Paint.ANTI_ALIAS_FLAG)
 
     companion object {
         const val DEFAULT_BORDER_WIDTH = 2
@@ -48,18 +47,12 @@ class CircleImageView @JvmOverloads constructor(context: Context, attrs: Attribu
             )
             a.recycle()
         }
+        with(borderPaint) {
+            color = borderColor
+            style = Paint.Style.STROKE
+            strokeWidth = borderWidth.toFloat()
+        }
 
-        shaderMatrix = Matrix()
-        bitmapPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-        borderPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-        borderBounds = RectF()
-        bitmapDrawBounds = RectF()
-        borderPaint.color = borderColor
-        borderPaint.style = Paint.Style.STROKE
-        borderPaint.strokeWidth = borderWidth.toFloat()
-        pressedPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-        pressedPaint.style = Paint.Style.FILL
-        initialized = true
     }
 
     fun getBorderWidth(): Int = borderWidth
@@ -97,20 +90,13 @@ class CircleImageView @JvmOverloads constructor(context: Context, attrs: Attribu
 
     override fun onDraw(canvas: Canvas) {
         setupBitmap()
-        drawBitmap(canvas)
-        drawBorder(canvas)
-    }
-
-
-    private fun drawBorder(canvas: Canvas) {
+        canvas.drawOval(bitmapDrawBounds, bitmapPaint)
         if (borderPaint.strokeWidth > 0f) {
             canvas.drawOval(borderBounds, borderPaint)
         }
+
     }
 
-    private fun drawBitmap(canvas: Canvas) {
-        canvas.drawOval(bitmapDrawBounds, bitmapPaint)
-    }
 
     private fun updateCircleDrawBounds(bounds: RectF) {
         val contentWidth = (width - paddingLeft - paddingRight).toFloat()
@@ -123,14 +109,11 @@ class CircleImageView @JvmOverloads constructor(context: Context, attrs: Attribu
         } else {
             top += (contentHeight - contentWidth) / 2f
         }
-        val diameter = Math.min(contentWidth, contentHeight)
+        val diameter = min(contentWidth, contentHeight)
         bounds.set(left, top, left + diameter, top + diameter)
     }
 
     private fun setupBitmap() {
-        if (!initialized) {
-            return
-        }
         bitmap = getBitmapFromDrawable(drawable)
         if (bitmap == null) {
             return
@@ -171,7 +154,7 @@ class CircleImageView @JvmOverloads constructor(context: Context, attrs: Attribu
         val height =
             if (drawable.intrinsicHeight == -1) DEFAULT_HEIGHT else drawable.intrinsicHeight
         bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
+        val canvas = Canvas(bitmap!!)
         drawable.setBounds(0, 0, canvas.width, canvas.height)
         drawable.draw(canvas)
         return bitmap
