@@ -15,7 +15,9 @@ import ru.skillbranch.devintensive.utils.Utils
 class ChatItemTouchHelperCallback(
     private val adapter: ChatAdapter,
     private val isArchived: Boolean,
-    private val swipeListener: (ChatItem?,  Int) -> Unit
+    private val swipingListener: (Int) -> Unit,
+    private val swipedListener: (ChatItem) -> Unit
+
 ) : ItemTouchHelper.Callback() {
     private val bgRec = RectF()
     private val bgPaint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -42,11 +44,11 @@ class ChatItemTouchHelperCallback(
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-         swipeListener.invoke(adapter.items[viewHolder.adapterPosition], -1)
+         swipedListener.invoke(adapter.items[viewHolder.adapterPosition])
     }
 
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
-        swipeListener.invoke(null, viewHolder?.adapterPosition ?: -1)
+        swipingListener.invoke(viewHolder?.adapterPosition ?: -1)
         if(actionState != ItemTouchHelper.ACTION_STATE_IDLE && viewHolder is ItemTouchViewHelper){
          viewHolder.onItemSelected()
         }
@@ -54,7 +56,7 @@ class ChatItemTouchHelperCallback(
     }
 
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
-        swipeListener.invoke(null, -1)
+        swipingListener.invoke(-1)
         if(viewHolder is ItemTouchViewHelper){
             viewHolder.onItemCleared()
         }

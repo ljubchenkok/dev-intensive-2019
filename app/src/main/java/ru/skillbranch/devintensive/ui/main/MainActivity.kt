@@ -78,22 +78,21 @@ class MainActivity : AppCompatActivity() {
                 Snackbar.make(rv_chat_list, "Click on ${it.title}", Snackbar.LENGTH_LONG).show()
             }
         }
-        val touchCallback = ChatItemTouchHelperCallback(chatAdapter, false)
-        { chatItem: ChatItem?, swipingPosition: Int ->
-            simpleItemDecorator.swipingItemNumber = swipingPosition
-            if (chatItem != null) {
-                val chatId = chatItem.id
-                viewModel.addToArchive(chatId)
-                val snackbar = Utils.createSnackbar(
-                    rv_chat_list,
-                    resources.getString(R.string.snackbar_text, chatItem.title),
-                    this
-                )
-                snackbar.setAction("Отмена") {
-                    viewModel.restoreFromArchive(chatId)
-                }
-                snackbar.show()
+        val swipingFunction =
+            { swipingPosition: Int -> simpleItemDecorator.swipingItemNumber = swipingPosition }
+        val touchCallback = ChatItemTouchHelperCallback(chatAdapter, false, swipingFunction) {
+            val chatId = it.id
+            viewModel.addToArchive(chatId)
+            val snackbar = Utils.createSnackbar(
+                rv_chat_list,
+                resources.getString(R.string.snackbar_text, it.title),
+                this
+            )
+            snackbar.setAction("Отмена") {
+                viewModel.restoreFromArchive(chatId)
             }
+            snackbar.show()
+
         }
         val touchHelper = ItemTouchHelper(touchCallback)
         touchHelper.attachToRecyclerView(rv_chat_list)

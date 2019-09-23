@@ -81,22 +81,23 @@ class ArchiveActivity : AppCompatActivity() {
         chatAdapter = ChatAdapter {
             Snackbar.make(rv_archive_list, "Click on ${it.title}", Snackbar.LENGTH_LONG).show()
         }
-        val touchCallback = ChatItemTouchHelperCallback(chatAdapter, true)
-        { chatItem: ChatItem?, swipingPosition: Int ->
-            simpleItemDecorator.swipingItemNumber = swipingPosition
-            if (chatItem != null) {
-                val chatId = chatItem.id
-                viewModel.restoreFromArchive(chatId)
-                val snackbar = Utils.createSnackbar(
-                    rv_archive_list,
-                    resources.getString(R.string.snackbar_archive_text, chatItem.title),
-                    this
-                )
-                snackbar.setAction("Отмена") {
-                    viewModel.addToArchive(chatId)
-                }
-                snackbar.show()
+        val swipingFunction =
+            { swipingPosition: Int -> simpleItemDecorator.swipingItemNumber = swipingPosition }
+        val touchCallback = ChatItemTouchHelperCallback(chatAdapter, true, swipingFunction)
+        {
+
+            val chatId = it.id
+            viewModel.restoreFromArchive(chatId)
+            val snackbar = Utils.createSnackbar(
+                rv_archive_list,
+                resources.getString(R.string.snackbar_archive_text, it.title),
+                this
+            )
+            snackbar.setAction("Отмена") {
+                viewModel.addToArchive(chatId)
             }
+            snackbar.show()
+
         }
         val touchHelper = ItemTouchHelper(touchCallback)
         touchHelper.attachToRecyclerView(rv_archive_list)
