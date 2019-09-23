@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.skillbranch.devintensive.R
+import ru.skillbranch.devintensive.models.data.ChatItem
 import ru.skillbranch.devintensive.models.data.ChatType
 import ru.skillbranch.devintensive.ui.adapters.ChatAdapter
 import ru.skillbranch.devintensive.ui.adapters.ChatItemTouchHelperCallback
@@ -68,6 +69,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
+        val simpleItemDecorator = SimpleItemDecorator(this@MainActivity)
         chatAdapter = ChatAdapter {
             if (it.chatType == ChatType.ARCHIVE) {
                 val intent = Intent(this, ArchiveActivity::class.java)
@@ -76,22 +78,29 @@ class MainActivity : AppCompatActivity() {
                 Snackbar.make(rv_chat_list, "Click on ${it.title}", Snackbar.LENGTH_LONG).show()
             }
         }
-
-        val touchCallback = ChatItemTouchHelperCallback(chatAdapter, false) {
-            val chatId = it.id
-            viewModel.addToArchive(chatId)
-            val snackbar = Utils.createSnackbar(rv_chat_list, resources.getString(R.string.snackbar_text, it.title), this )
-            snackbar.setAction("Отмена") {
-                viewModel.restoreFromArchive(chatId)
+        val touchCallback = ChatItemTouchHelperCallback(chatAdapter, false)
+        { chatItem: ChatItem?, swipingPosition: Int ->
+            simpleItemDecorator.swipingItemNumber = swipingPosition
+            if (chatItem != null) {
+                val chatId = chatItem.id
+                viewModel.addToArchive(chatId)
+                val snackbar = Utils.createSnackbar(
+                    rv_chat_list,
+                    resources.getString(R.string.snackbar_text, chatItem.title),
+                    this
+                )
+                snackbar.setAction("Отмена") {
+                    viewModel.restoreFromArchive(chatId)
+                }
+                snackbar.show()
             }
-            snackbar.show()
         }
         val touchHelper = ItemTouchHelper(touchCallback)
         touchHelper.attachToRecyclerView(rv_chat_list)
         with(rv_chat_list) {
             adapter = chatAdapter
             layoutManager = LinearLayoutManager(this@MainActivity)
-            addItemDecoration(SimpleItemDecorator(this@MainActivity))
+            addItemDecoration(simpleItemDecorator)
         }
         fab.setOnClickListener {
             val intent = Intent(this, GroupActivity::class.java)
@@ -100,8 +109,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
-
 
 
     private fun initViewModel() {

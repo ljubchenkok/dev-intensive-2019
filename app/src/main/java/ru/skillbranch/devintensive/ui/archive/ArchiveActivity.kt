@@ -13,6 +13,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_archive.*
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import ru.skillbranch.devintensive.R
+import ru.skillbranch.devintensive.models.data.ChatItem
 import ru.skillbranch.devintensive.ui.adapters.ChatAdapter
 import ru.skillbranch.devintensive.ui.adapters.ChatItemTouchHelperCallback
 import ru.skillbranch.devintensive.ui.custom.SimpleItemDecorator
@@ -41,7 +42,7 @@ class ArchiveActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu_search, menu)
         val searchView = (menu?.findItem(R.id.action_search))?.actionView as SearchView
         searchView.queryHint = "Введите имя пользователя"
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 viewModel.handleSearchQuery(query)
                 return true
@@ -60,12 +61,11 @@ class ArchiveActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return  if(item?.itemId == android.R.id.home){
+        return if (item?.itemId == android.R.id.home) {
             finish()
             overridePendingTransition(R.anim.idle, R.anim.bottom_down)
             true
-        }
-        else {
+        } else {
             return super.onOptionsItemSelected(item)
         }
     }
@@ -77,31 +77,41 @@ class ArchiveActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
+        val simpleItemDecorator = SimpleItemDecorator(this@ArchiveActivity)
         chatAdapter = ChatAdapter {
             Snackbar.make(rv_archive_list, "Click on ${it.title}", Snackbar.LENGTH_LONG).show()
         }
-        val touchCallback = ChatItemTouchHelperCallback(chatAdapter, true) {
-            val chatId = it.id
-            viewModel.restoreFromArchive(chatId)
-            val snackbar = Utils.createSnackbar(rv_archive_list, resources.getString(R.string.snackbar_archive_text, it.title), this )
-            snackbar.setAction("Отмена") {
-                viewModel.addToArchive(chatId)
+        val touchCallback = ChatItemTouchHelperCallback(chatAdapter, true)
+        { chatItem: ChatItem?, swipingPosition: Int ->
+            simpleItemDecorator.swipingItemNumber = swipingPosition
+            if (chatItem != null) {
+                val chatId = chatItem.id
+                viewModel.restoreFromArchive(chatId)
+                val snackbar = Utils.createSnackbar(
+                    rv_archive_list,
+                    resources.getString(R.string.snackbar_archive_text, chatItem.title),
+                    this
+                )
+                snackbar.setAction("Отмена") {
+                    viewModel.addToArchive(chatId)
+                }
+                snackbar.show()
             }
-            snackbar.show()
         }
         val touchHelper = ItemTouchHelper(touchCallback)
         touchHelper.attachToRecyclerView(rv_archive_list)
         with(rv_archive_list) {
             adapter = chatAdapter
             layoutManager = LinearLayoutManager(this@ArchiveActivity)
-            addItemDecoration(SimpleItemDecorator(this@ArchiveActivity))
+            addItemDecoration(simpleItemDecorator)
         }
     }
 
 
     private fun initViewModel() {
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        viewModel.getChatData(isArchived = true).observe(this, Observer { chatAdapter.updateData(it) })
+        viewModel.getChatData(isArchived = true)
+            .observe(this, Observer { chatAdapter.updateData(it) })
 
     }
 
